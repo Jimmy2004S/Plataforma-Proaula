@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,4 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::resource('user', UserController::class);
+//Route::resource('user', UserController::class);
+
+Route::controller(AdminController::class)->group(function(){
+    Route::put('user/{user}/estado' , 'estadoUsuario')->name('user.estado');
+});
+
