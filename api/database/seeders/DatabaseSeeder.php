@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
 
 
         User::create([
-            'name' => 'El admin',
+            'nombre' => 'El admin',
             'apellidos' => 'Si es',
             'email' => 'dsadad@hdokd.com',
             'identificacion' => '1234567890',

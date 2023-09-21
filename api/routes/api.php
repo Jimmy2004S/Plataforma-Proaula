@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,14 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('prueba' ,  function(Request $request){
-    $var = null;
-    $var = $request -> campo;
-
-    return $request -> all();
-});
-
-Route::get('prueba' ,  function(){
-
-    return 'Hola mundo';
-});
+Route::resource('user', UserController::class);

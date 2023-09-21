@@ -11,6 +11,13 @@ class Estudiante extends Model
     use HasFactory;
 
 
+    //Relacion uno a uno inversa
+    public function user()
+    {
+    return $this->belongsTo(User::class);
+    }
+
+
     //Relacion uno a muchos inversa
     public function carrera(): BelongsTo
     {

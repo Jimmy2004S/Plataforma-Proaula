@@ -24,7 +24,7 @@ class UserFactory extends Factory
         $email = $this->faker->unique()->safeEmail;
         $identificacion = $this->faker->unique()->numerify('##########'); // Genera un número de 10 dígitos
         return [
-            'name' => $nombres,
+            'nombre' => $nombres,
             'apellidos' => $apellidos,
             'email' => $email,
             'identificacion' => $identificacion,

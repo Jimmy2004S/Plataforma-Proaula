@@ -11,6 +11,12 @@ class Profesor extends Model
     use HasFactory;
     protected $table = 'profesores';
 
+    //Relacion uno a uno inversa
+    public function user()
+    {
+    return $this->belongsTo(User::class);
+    }
+
     //Relacion uno a muchos inversa
     public function departamento(): BelongsTo
     {
