@@ -1,6 +1,67 @@
 import "../assets/styles/main.scss";
+import { useDispatch } from "react-redux";
+import { addUser } from "../features/users/usersSlice";
+import { useState } from "react";
 
 export const RegisterPage = () => {
+  const dispatch = useDispatch();
+  const [userData, setUserData] = useState({
+    codigo: "",
+    nombre: "",
+    apellidos: "",
+    email: "",
+    contrasenia: "",
+    tipousuario: "",
+    departamento: "",
+    carrera: "",
+    semestre: "",
+    estados: "2",
+  });
+
+  const handleChange = (e) => {
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (response.ok) {
+        const newUser = await response.json();
+
+        dispatch(addUser(newUser));
+
+        setUserData({
+          codigo: "",
+          nombre: "",
+          apellidos: "",
+          email: "",
+          contrasenia: "",
+          tipousuario: "",
+          departamento: "",
+          carrera: "",
+          semestre: "",
+          estados: "2",
+        });
+
+      } else {
+        console.error("Error:", response.status);
+      }
+    } catch (error) {
+      console.error("Error", error);
+    }
+  };
   return (
     <div className="flex-container">
       <div className="container">
@@ -10,7 +71,7 @@ export const RegisterPage = () => {
           interactuar con tus proyectos favoritos.
         </p>
       </div>
-      <form method="post" className="form">
+      <form method="post" className="form" onSubmit={handleSubmit}>
         <h3 className="form__title">Crea una cuenta</h3>
         <p className="form__text">
           ¿Ya tienes una cuenta? <a href="">Inicia sesion</a>
@@ -21,13 +82,15 @@ export const RegisterPage = () => {
           placeholder="Nombre"
           className="form__input"
           required
+          onChange={handleChange}
         />
         <input
           type="text"
-          name="apellido"
+          name="apellidos"
           placeholder="Apellido"
           className="form__input"
           required
+          onChange={handleChange}
         />
         <input
           type="number"
@@ -35,13 +98,15 @@ export const RegisterPage = () => {
           placeholder="Codigo"
           className="form__input form__input--block"
           required
+          onChange={handleChange}
         />
         <input
           type="email"
-          name="correo"
+          name="email"
           placeholder="Correo"
           className="form__input form__input--block"
           required
+          onChange={handleChange}
         />
         <input
           type="password"
@@ -49,14 +114,29 @@ export const RegisterPage = () => {
           placeholder="Contraseña"
           className="form__input form__input--block"
           required
+          onChange={handleChange}
         />
         <label htmlFor="profesor" className="form__label">
-          <input type="radio" name="tipousuario" id="profesor" className="form__radio"/>
+          <input
+            type="radio"
+            name="tipousuario"
+            id="profesor"
+            className="form__radio"
+            value="3"
+            onChange={handleChange}
+          />
           Profesor
         </label>
         <label htmlFor="estudiante" className="form__label">
-          <input type="radio" name="tipousuario" id="estudiante" className="form__radio"/>
-        Estudiante</label>
+          <input
+            type="radio"
+            name="tipousuario"
+            id="estudiante"
+            className="form__radio"
+            value="2"
+          />
+          Estudiante
+        </label>
         <fieldset className="form__fieldset">
           <h4 className="fieldset__title">Profesor</h4>
           <select
