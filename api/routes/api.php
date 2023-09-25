@@ -21,9 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-//Route::resource('user', UserController::class);
+Route::resource('user', UserController::class);
 
 Route::controller(AdminController::class)->group(function(){
-    Route::put('user/{user}/estado' , 'estadoUsuario')->name('user.estado');
+    Route::put('admin/user-estado/{user}' , 'estadoUsuario');
+    Route::delete('admin/user-registro/{user}', 'eliminarRegistroUsuario');
 });
 
