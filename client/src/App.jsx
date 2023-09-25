@@ -1,12 +1,11 @@
-// import { RegisterPage } from "./pages/RegisterPage"
-import { RegistroUsuariosPage } from "./pages/Admin/RegistroUsuariosPage"
+import { RegisterPage } from "./pages/RegisterPage"
+// import { RegistroUsuariosPage } from "./pages/Admin/RegistroUsuariosPage"
 
 function App() {
 
   return (
     <>
-      {/* <RegisterPage/> */}
-      <RegistroUsuariosPage/>
+      <RegisterPage/>
     </>
   )
 }

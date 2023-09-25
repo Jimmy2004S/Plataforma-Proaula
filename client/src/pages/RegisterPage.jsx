@@ -29,7 +29,7 @@ export const RegisterPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("", {
+      const response = await fetch("api/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
