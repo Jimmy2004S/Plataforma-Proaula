@@ -1,0 +1,105 @@
+@use 'reset.scss';
+@use './mixins/mixin-form.scss';
+
+body{
+    background-color: whitesmoke;
+}
+.flex-container{
+    @include mixin-form.form-flex;
+    margin: 2rem auto;
+    width: 90%;
+    max-width: 850px;
+    height: fit-content;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.container{
+    background: linear-gradient(to right, #021B79, #0575E6);
+    color: #fff;
+    padding-inline: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 50%;
+    &__title{
+        font-size: 2rem;
+    }
+
+    &__text{
+        font-style: italic;
+    }
+
+    @media (max-width: 767px) {
+       width: 100%;
+       padding: 1.5rem;
+    }
+}
+
+.form{
+    background-color: #f8f8ff;
+    padding: 1.5rem;
+    width: 60%;
+    &__title{
+        font-size: 1.8rem;
+        line-height: 1.7;
+    }
+    &__text{
+       margin-bottom: 1rem;
+    }
+    &__input, &__select{
+        padding: 0.7rem;
+        font-size: 1.1rem;
+        border-radius: 0.5rem;
+        border: 1px solid lightgray;
+        margin: 0.5rem 0.4rem;
+        width: 45%;
+
+        &:focus{
+            outline: none;
+        }
+    }
+    &__input--block{
+        display: block;
+        width: 94%;
+    }
+    &__radio{
+        margin: 0.4rem;
+        width: 17px;
+        height: 17px;
+    }
+    &__label{
+        margin-right: 0.8rem;
+        font-size: 1.1rem;
+    }
+    &__fieldset{
+        border: none;
+        margin: 0.4rem;
+    }
+    &__select{
+        width: 100%;
+    }
+    &__button{
+        display: block;
+        border: none;
+        border-radius: 0.2rem;
+        background-color: #3AAA35;
+        color: #fff;
+        padding: 0.8rem;
+        margin: 0.5rem auto;
+        font-weight: bold;
+        width: 80%;
+        font-size: 1rem;
+    }
+
+    @media (max-width: 767px) {
+        width: 100%;
+        padding: 1.5rem;
+     }
+}
+
+.fieldset__title{
+    font-size: 1.2rem; 
+}
+
+

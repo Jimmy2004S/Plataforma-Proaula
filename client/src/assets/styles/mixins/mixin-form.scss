@@ -1,0 +1,7 @@
+@mixin form-flex{
+    display: flex;
+    
+    @media (max-width: 767px) {
+        flex-wrap: wrap;
+    }
+}

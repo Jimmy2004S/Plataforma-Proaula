@@ -1,0 +1,37 @@
+.footer{
+    background-color: #043158;
+    color: #fff;
+    padding: 1rem;
+    line-height: 1.7;
+
+    &__container{
+        display: flex;
+        gap: 0.2rem;
+        justify-content: space-between;
+    }
+
+    &__title{
+        margin-bottom: 0.5rem;
+    }
+
+    &__link:hover{
+        color: #005AA9;
+    }
+
+    &__info{
+        border-top: 0.5px solid lightslategray;
+        display: flex;
+        justify-content: space-around;
+        margin-top: 0.9rem;
+        padding: 0.8rem;
+
+    }
+}
+
+.row-center{
+    align-self: center;
+}
+
+.row{
+    margin: 0.5rem;
+}
