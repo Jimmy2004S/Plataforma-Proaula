@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,14 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('prueba' ,  function(Request $request){
-    $var = null;
-    $var = $request -> campo;
+Route::resource('user', UserController::class);
 
-    return $request -> all();
+Route::controller(AdminController::class)->group(function(){
+    Route::put('admin/user-estado/{user}' , 'estadoUsuario');
+    Route::delete('admin/user-registro/{user}', 'eliminarRegistroUsuario');
 });
 
-Route::get('prueba' ,  function(){
-
-    return 'Hola mundo';
-});
