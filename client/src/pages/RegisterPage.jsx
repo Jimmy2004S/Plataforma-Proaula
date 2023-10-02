@@ -1,22 +1,22 @@
 import "../assets/styles/main.scss";
-import { useDispatch } from "react-redux";
-import { addUser } from "../features/users/usersSlice";
 import { useState } from "react";
+import { useCreateUserMutation } from "../api/apiSlice";
 
 export const RegisterPage = () => {
-  const dispatch = useDispatch();
   const [userData, setUserData] = useState({
     codigo: "",
     nombre: "",
     apellidos: "",
     email: "",
-    contrasenia: "",
-    tipousuario: "",
+    rol_id: "",
+    password: "",
     departamento: "",
-    carrera: "",
     semestre: "",
+    carrera: "",
     estados: "2",
   });
+
+  const [createUser] = useCreateUserMutation();
 
   const handleChange = (e) => {
     setUserData({
@@ -29,35 +29,21 @@ export const RegisterPage = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
+      const response = await createUser(userData);
+      console.log("exito", response);
+      console.log(userData);
+      setUserData({
+        codigo: "",
+        nombre: "",
+        apellidos: "",
+        email: "",
+        rol_id: "",
+        password: "",
+        departamento: "",
+        semestre: "",
+        carrera: "",
+        estados: "2",
       });
-
-      if (response.ok) {
-        const newUser = await response.json();
-
-        dispatch(addUser(newUser));
-
-        setUserData({
-          codigo: "",
-          nombre: "",
-          apellidos: "",
-          email: "",
-          contrasenia: "",
-          tipousuario: "",
-          departamento: "",
-          carrera: "",
-          semestre: "",
-          estados: "2",
-        });
-
-      } else {
-        console.error("Error:", response.status);
-      }
     } catch (error) {
       console.error("Error", error);
     }
@@ -80,6 +66,7 @@ export const RegisterPage = () => {
           type="text"
           name="nombre"
           placeholder="Nombre"
+          value={userData.nombre}
           className="form__input"
           required
           onChange={handleChange}
@@ -87,6 +74,7 @@ export const RegisterPage = () => {
         <input
           type="text"
           name="apellidos"
+          value={userData.apellidos}
           placeholder="Apellido"
           className="form__input"
           required
@@ -95,6 +83,7 @@ export const RegisterPage = () => {
         <input
           type="number"
           name="codigo"
+          value={userData.codigo}
           placeholder="Codigo"
           className="form__input form__input--block"
           required
@@ -103,6 +92,7 @@ export const RegisterPage = () => {
         <input
           type="email"
           name="email"
+          value={userData.email}
           placeholder="Correo"
           className="form__input form__input--block"
           required
@@ -110,7 +100,8 @@ export const RegisterPage = () => {
         />
         <input
           type="password"
-          name="contrasenia"
+          name="password"
+          value={userData.password}
           placeholder="Contraseña"
           className="form__input form__input--block"
           required
@@ -119,7 +110,7 @@ export const RegisterPage = () => {
         <label htmlFor="profesor" className="form__label">
           <input
             type="radio"
-            name="tipousuario"
+            name="rol_id"
             id="profesor"
             className="form__radio"
             value="3"
@@ -130,10 +121,10 @@ export const RegisterPage = () => {
         <label htmlFor="estudiante" className="form__label">
           <input
             type="radio"
-            name="tipousuario"
+            name="rol_id"
             id="estudiante"
             className="form__radio"
-            value="2"
+            value="2" onChange={handleChange}
           />
           Estudiante
         </label>
@@ -141,7 +132,6 @@ export const RegisterPage = () => {
           <h4 className="fieldset__title">Profesor</h4>
           <select
             name="departamento"
-            id=""
             className="form__select form__select--block"
           >
             <option disabled>Departamento</option>
@@ -149,34 +139,30 @@ export const RegisterPage = () => {
         </fieldset>
         <fieldset className="form__fieldset">
           <h4 className="fieldset__title">Estudiante</h4>
-          <select name="carrera" className="form__select">
+          <select name="carrera" className="form__select" onChange={handleChange}>
             <option disabled>Carrera</option>
-            <option value="Tecnología En Sistemas De Gestión De Calidad">
+            <option value="Carrera 1">
               Tec. Sistemas De Gestión De Calidad
             </option>
-            <option value="Tecnología En Desarrollo De Sistemas De Información Y De Software">
+            <option value="Carrera 2">
               Tec. Desarrollo De Sistemas De Información Y De Software
             </option>
-            <option value="Tecnología En Gestión De Servicios Turísticos Y Hoteleros">
+            <option value="carrera 3">
               Tec. Gestión De Servicios Turísticos Y Hoteleros
             </option>
-            <option value="Licenciatura En Bilingüismo Con Énfasis En Inglés">
+            <option value="carrera 4">
               Licenciatura En Bilingüismo Con Énfasis En Inglés
             </option>
-            <option value="Contaduría Pública">Contaduría Pública</option>
-            <option value="Administración De Empresas">
-              Administración De Empresas
-            </option>
-            <option value="Derecho">Derecho</option>
-            <option value="Ingeniería Industrial">Ingeniería Industrial</option>
-            <option value="Ingeniería De Sistemas">
-              Ingeniería De Sistemas
-            </option>
-            <option value="Administración De Empresas Turísticas Y Hoteleras">
+            <option value="carrera 5">Contaduría Pública</option>
+            <option value="carrera 6">Administración De Empresas</option>
+            <option value="carrera 7">Derecho</option>
+            <option value="carrera 8">Ingeniería Industrial</option>
+            <option value="carrera 9">Ingeniería De Sistemas</option>
+            <option value="carrera 10">
               Administración De Empresas Turísticas Y Hoteleras
             </option>
           </select>
-          <select name="semestre" className="form__select">
+          <select name="semestre" className="form__select" onChange={handleChange}>
             <option disabled>Semestre</option>
             <option value="1">1</option>
             <option value="2">2</option>

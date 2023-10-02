@@ -1,11 +1,17 @@
 import { RegisterPage } from "./pages/RegisterPage"
-// import { RegistroUsuariosPage } from "./pages/Admin/RegistroUsuariosPage"
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import { RegistroUsuariosPage } from "./pages/Admin/RegistroUsuariosPage"
 
 function App() {
 
   return (
     <>
-      <RegisterPage/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<RegisterPage/>}/>
+          <Route path="/list-users" element={<RegistroUsuariosPage/>}/>
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

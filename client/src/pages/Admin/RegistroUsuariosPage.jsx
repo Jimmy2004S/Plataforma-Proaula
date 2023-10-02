@@ -3,26 +3,21 @@ import Footer from "../../components/common/Footer";
 import Nav from "../../components/admin/Nav";
 import { RegistroCard } from "../../components/admin/RegistroCard";
 import "../../assets/styles/admin/registerpage.scss";
+import { useGetUserQuery } from "../../api/apiSlice";
 
 export const RegistroUsuariosPage = () => {
-  // const [usuarios, setUsuarios] = useState([])
-  const usuario = {
-    nombre: "John Doe",
-    codigo: "12345",
-  };
+  const { data: users, isError, isLoading, error } = useGetUserQuery();
+  
+  if (isLoading) return <div>Loading...</div>;
+  else if (isError) return <div>Error: {error.message}</div>;
+  
   return (
     <>
-      <div className="flex-container">
+      <div className="wrapper">
         <Nav />
         <main className="main">
           <h2 className="main__title">Usuarios</h2>
-          {/* {usuarios.map(usuario =>(<RegistroCard key={usuario.codigo}/>))} */}
-          <RegistroCard usuario={usuario} />
-          <RegistroCard usuario={usuario} />
-          <RegistroCard usuario={usuario} />
-          <RegistroCard usuario={usuario} />
-          <RegistroCard usuario={usuario} />
-          <RegistroCard usuario={usuario} />
+          {users.map(user =>(<RegistroCard key={user.id} user={user}/>))}
         </main>
       </div>
       <Footer />

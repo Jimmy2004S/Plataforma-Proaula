@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('email')->unique();
-            $table->string('identificacion' , 10)->unique();
+            $table->string('identificacion' , 10)->default("1234567890");
             $table->enum('estados', [1, 2]) -> default(2);
 
             $table->unsignedBigInteger('rol_id')->default(0);

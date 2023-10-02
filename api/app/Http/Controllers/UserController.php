@@ -34,7 +34,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
         DB::beginTransaction();
         try {
             // Primera consulta
@@ -42,16 +41,18 @@ class UserController extends Controller
             $user -> nombre = $request -> nombre;
             $user -> apellidos = $request -> apellidos;
             $user -> email = $request -> email;
-            $user -> identificacion = $request -> identificacion;
+            // $user -> identificacion = $request -> identificacion;
             $user -> password = $request -> password;
             $user -> rol_id = $request -> rol_id;
             $user -> save();
 
             // Segunda consulta
             if($user -> rol_id == '2'){
-                $carrera = Carrera::where('nombre', $request->estudiante['carrera'])->first();
+                // $carrera = Carrera::where('nombre', $request->estudiante['carrera'])->first();
+                $carrera = Carrera::where('nombre', $request->carrera)->first();
                 $estudiante = new Estudiante();
-                $estudiante -> semestre = $request->estudiante['semestre'];
+                // $estudiante -> semestre = $request->estudiante['semestre'];
+                $estudiante -> semestre = $request->semestre;
                 $estudiante -> carrera_id = $carrera -> id;
                 $estudiante -> user_id = $user -> id;
                 $estudiante -> save();
