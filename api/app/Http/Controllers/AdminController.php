@@ -27,7 +27,7 @@ class AdminController extends Controller
     public function eliminarRegistroUsuario(User $user){
         try{
             $userToDelete = User::find($user->id);
-            $userToDelete->delete;
+            $userToDelete->delete();
             return 'eliminado';
         }catch(\Exception $e){
             return 'Error';

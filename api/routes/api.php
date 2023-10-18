@@ -21,7 +21,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::resource('user', UserController::class);
+Route::controller(UserController::class)->group(function(){
+    Route::get('user' , 'index');
+    Route::post('user' , 'store');
+    Route::get('user/create' , 'create');
+    Route::get('user/{user}' , 'show');
+    Route::put('user/{user}' , 'update');
+    Route::delete('user/desactivarCuenta/{user}' , 'destroy');
+    Route::get('user/{user}/edit' , 'edit');
+});
 
 Route::controller(AdminController::class)->group(function(){
     Route::put('admin/user-estado/{user}' , 'estadoUsuario');
