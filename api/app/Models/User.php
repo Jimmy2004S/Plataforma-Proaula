@@ -47,18 +47,9 @@ class User extends Authenticatable
 
 
     //Relacion uno a uno
+
     public function rol(): HasOne
     {
         return $this->hasOne(Role::class);
-    }
-
-    public function estudiante(): HasOne
-    {
-        return $this->hasOne(Estudiante::class);
-    }
-
-    public function profesor(): HasOne
-    {
-        return $this->hasOne(Profesor::class);
     }
 }

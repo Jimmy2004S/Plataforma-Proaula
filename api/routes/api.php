@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\UserController;
+use App\Models\Perfil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,23 +18,29 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+/*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});*/
+
+
+Route::middleware(['auth:sanctum'])->group(function(){
+    Route::get('user' , [UserController::class, 'index']);
+    Route::get('logout' , [UserController::class, 'logout']);
 });
 
 
 Route::controller(UserController::class)->group(function(){
-    Route::get('user' , 'index');
-    Route::post('user' , 'store');
-    Route::get('user/create' , 'create');
     Route::get('user/{user}' , 'show');
     Route::put('user/{user}' , 'update');
     Route::delete('user/desactivarCuenta/{user}' , 'destroy');
-    Route::get('user/{user}/edit' , 'edit');
+    Route::post('login' , 'login');
+    Route::post('user' , 'store');
 });
 
 Route::controller(AdminController::class)->group(function(){
     Route::put('admin/user-estado/{user}' , 'estadoUsuario');
     Route::delete('admin/user-registro/{user}', 'eliminarRegistroUsuario');
 });
+
+
 

@@ -16,11 +16,9 @@ class RoleFactory extends Factory
      */
     public function definition(): array
     {
-
-        $nombres = ['admin', 'estudiante', 'profesor'];
-        shuffle($nombres);
+        $nombresRoles = ['admin', 'estudiante', 'profesor'];
         return [
-            'nombre' => array_shift($nombres),
+            'nombre' => $this->faker->unique()->randomElement(['admin', 'estudiante', 'profesor']),
         ];
     }
 }

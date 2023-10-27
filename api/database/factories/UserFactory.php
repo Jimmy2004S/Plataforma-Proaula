@@ -22,15 +22,17 @@ class UserFactory extends Factory
         $nombres = $this->faker->firstName;
         $apellidos = $this->faker->lastName;
         $email = $this->faker->unique()->safeEmail;
+        $codigo = $this->faker->unique()->numerify('########');
         $identificacion = $this->faker->unique()->numerify('##########'); // Genera un número de 10 dígitos
         return [
             'nombre' => $nombres,
             'apellidos' => $apellidos,
             'email' => $email,
+            'password' => bcrypt('password'), // Puedes establecer una contraseña fija o generar una aleatoria
             'identificacion' => $identificacion,
+            'codigo' => $codigo,
             'estados' => $this->faker->randomElement([1, 2]),
             'email_verified_at' => now(),
-            'password' => bcrypt('password'), // Puedes establecer una contraseña fija o generar una aleatoria
             'remember_token' => Str::random(10),
         ];
     }

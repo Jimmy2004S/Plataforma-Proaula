@@ -9,6 +9,13 @@ use App\Models\Profesor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Exception;
+use Illuminate\Database\Eloquent\Casts\Json;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
@@ -17,17 +24,10 @@ class UserController extends Controller
      */
    public function index()
     {
-        $users = User::with('estudiante', 'profesor')->get();
+        $users = User::all();
         return response()->json($users);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return "hola";
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,41 +35,44 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        DB::beginTransaction();
-        try {
-            // Primera consulta
-            $user = new User();
-            $user -> nombre = $request -> nombre;
-            $user -> apellidos = $request -> apellidos;
-            $user -> email = $request -> email;
-            $user -> identificacion = $request -> identificacion;
-            $user -> password = $request -> password;
-            $user -> rol_id = $request -> rol_id;
-            $user -> save();
+        $validator = Validator::make($request->all(),
+        [
+            "codigo" => "required|int",
+            "password" => "required|min:8"
+        ]);
 
-            // Segunda consulta
-            if($user -> rol_id == '2'){
-                $carrera = Carrera::where('nombre', $request->estudiante['carrera'])->first();
-                $estudiante = new Estudiante();
-                $estudiante -> semestre = $request->estudiante['semestre'];
-                $estudiante -> carrera_id = $carrera -> id;
-                $estudiante -> user_id = $user -> id;
-                $estudiante -> save();
-            }elseif($user -> rol_id == '3'){
-                $departamento = Departamento::where('nombre', $request->profesor['departamento'])->first();
-                $profesor = new Profesor();
-                $profesor -> departamento_id = $departamento -> id;
-                $profesor -> user_id = $user -> id;
-                $profesor -> save();
-            }
-            // Si todo ha ido bien, confirma la transacción
-            DB::commit();
-            return response()->json(['message' => 'Transacción completada exitosamente'], 200);
-        } catch (\Exception $e) {
-            // Si ocurre algún error, revierte la transacción
-            DB::rollback();
-            return response()->json(['message' => 'Error en la transacción: ' . $e->getMessage()], 500);
+        if($validator->fails()){
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()->all()
+            ],400);
         }
+            $codigo = $request->codigo;
+            $response = http::get("http://localhost/api_uni/api.php?action=get_user&codigo=$codigo");
+            if($response -> successful()){
+                $api = $response->json();
+                $user = new user();
+                $user -> user_name = $api['nombre'] . '_' . $user->id;
+                $user -> email = $api['email'];
+                $user -> password = Hash::make($request->password);
+                if($api['tipo'] == 'Estudiante'){
+                    $user -> rol_id = 2;
+                }elseif($api['api'] == 'Profesor'){
+                    $user -> rol_id = 3;
+                }
+                $user -> save();
+                return response()->json([
+                    'status' => true,
+                    'message' => 'create',
+                    'token' => $user->createToken('API TOKEN')->plainTextToken
+                ],200);
+            }else{
+                return response()->json([
+                    'status' => false,
+                    'errors' => ['Unauthorized']
+                ], 401);
+            }
+
     }
 
     /**
@@ -79,15 +82,6 @@ class UserController extends Controller
     {
         //
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      */
@@ -102,5 +96,47 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+            if($validator->fails()){
+                return response()->json([
+                    'status' => false,
+                    'errors' => $validator -> errors()->all()
+                ], 400);
+            }
+            if(!Auth::attempt($request->only('email' , 'password'))){
+                return response()->json([
+                    'status' => false,
+                    'errors' => ['Unauthorized']
+                ],401);
+            }
+            $user = User::where('email', $request->email)->first();
+            return response()->json([
+                'status' => true,
+                'message' => 'Looged',
+                'data' => $user,
+                'token' => $user->createToken('API TOKEN')->plainTextToken
+            ], 200);
+    }
+
+    public function logout(){
+         // Obtén al usuario autenticado actual
+        $user = Auth::user();
+
+        // Revoca todos los tokens de acceso del usuario
+        $user->tokens->each(function ($token, $key) {
+            $token->delete();
+        });
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Logout exitoso'
+        ], 200);
     }
 }
