@@ -1,6 +1,7 @@
-import "../assets/styles/main.scss";
+import "../../assets/styles/register-page.scss";
 import { useState } from "react";
-import { useCreateUserMutation } from "../api/apiSlice";
+import { useCreateUserMutation } from "../../api/apiSlice";
+import {Link} from 'react-router-dom'
 
 export const RegisterPage = () => {
   const [userData, setUserData] = useState({
@@ -60,7 +61,7 @@ export const RegisterPage = () => {
       <form method="post" className="form" onSubmit={handleSubmit}>
         <h3 className="form__title">Crea una cuenta</h3>
         <p className="form__text">
-          ¿Ya tienes una cuenta? <a href="">Inicia sesion</a>
+          ¿Ya tienes una cuenta? <Link to="/">Inicia sesion</Link>
         </p>
         <input
           type="text"

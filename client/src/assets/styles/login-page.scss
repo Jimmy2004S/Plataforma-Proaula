@@ -1,0 +1,96 @@
+@use 'reset.scss';
+@use './mixins/mixin-form.scss';
+
+body{
+    background-color: whitesmoke;
+}
+
+.Flex-container{
+    @include mixin-form.form-flex;
+    margin: 2rem auto;
+    width: 80%;
+    max-width: 870px;
+    height: 85vh;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.container{
+    background: linear-gradient(to right, #021B79, #0575E6);
+    color: #fff;
+    padding-inline: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.8rem;
+    width: 50%;
+
+    &__title{
+        font-size: 2rem;
+    }
+
+    &__text{
+        font-style: italic;
+    }
+
+    @media (max-width: 767px) {
+       width: 100%;
+       padding: 1.5rem;
+    }
+}
+
+.Form{
+    background-color: #f8f8ff;
+    padding: 1.5rem;
+    width: 50%;
+    min-height: 85vh;
+    &__title{
+        font-size: 1.8rem;
+        line-height: 1.7;
+        margin-bottom: 1.3rem;
+    }
+    &__label{
+       font-weight: bold;
+       display: block;
+    }
+    &__input{
+        display: block;
+        padding: 0.7rem;
+        font-size: 1.2rem;
+        border-radius: 0.5rem;
+        border: 1px solid lightgray;
+        margin-bottom: 1rem;
+        margin-top: 0.5rem;
+        width: 100%;
+
+        &:focus{
+            outline: none;
+        }
+    }
+
+    &__link{
+        float: right;
+        margin: 1rem;
+    }
+
+    &__button{
+        display: block;
+        border: none;
+        border-radius: 0.2rem;
+        background-color: #3AAA35;
+        color: #fff;
+        padding: 0.8rem;
+        margin: 1.2rem auto;
+        font-weight: bold;
+        width: 80%;
+        font-size: 1rem;
+    }
+
+    &__link--blue{
+        color: #021B79;
+    }
+
+    @media (max-width: 767px) {
+        width: 100%;
+        padding: 1.5rem;
+    }
+}

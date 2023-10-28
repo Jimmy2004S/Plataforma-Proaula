@@ -2,7 +2,7 @@
 import Footer from "../../components/common/Footer";
 import Nav from "../../components/admin/Nav";
 import { RegistroCard } from "../../components/admin/RegistroCard";
-import "../../assets/styles/admin/registerpage.scss";
+import "../../assets/styles/admin/userlist-page.scss";
 import { useGetUserQuery } from "../../api/apiSlice";
 
 export const RegistroUsuariosPage = () => {
