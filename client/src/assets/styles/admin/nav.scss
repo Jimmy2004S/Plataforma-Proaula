@@ -7,6 +7,8 @@
     flex-direction: column;
     padding: 1.5rem 1.4rem;
     gap: 6rem;
+    min-height: 100vh;
+    height: auto;
 
     &__container--right{
         // width: 35%;
@@ -32,6 +34,4 @@
         text-decoration: none;
         font-size: 1.2rem;
     }
-
-
 }
