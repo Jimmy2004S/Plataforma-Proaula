@@ -1,5 +1,7 @@
 export const IndexStudentPage = () => {
   return (
-    <div>IndexStudents</div>
+    <div>
+      <h1>Inicio estudiantes</h1>
+    </div>
   )
 }
