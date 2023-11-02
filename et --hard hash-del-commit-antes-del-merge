@@ -1,0 +1,97 @@
+[33mcommit eb58ce01a2d74e5252bd04e1fa6b3802854fb3af[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/client[m[33m)[m
+Author: Leidi <leididelapuente3@gmail.com>
+Date:   Mon Oct 30 21:26:48 2023 -0500
+
+    Login con error 404
+
+[33mcommit 3ee0aad7d4237faa2bae7fc07cfd2e8a3bb864db[m
+Author: Leidi <leididelapuente3@gmail.com>
+Date:   Sun Oct 29 17:23:51 2023 -0500
+
+    Configuracion de redux toolkit y redux toolkit query
+
+[33mcommit f6990e1ea435413dd4a3d64467ec2b3c308613a1[m
+Author: Leidi <leididelapuente3@gmail.com>
+Date:   Sat Oct 28 18:37:06 2023 -0500
+
+    Componente de login y rutas para inicio de usuarios
+
+[33mcommit 691c1c29a516da99d04e941a40514d8203246036[m[33m ([m[1;31mcliente/client[m[33m, [m[1;32mclient[m[33m)[m
+Author: Leidi <leididelapuente3@gmail.com>
+Date:   Sun Oct 15 22:31:32 2023 -0500
+
+    Metodo Eliminar Usuario
+
+[33mcommit 7436036c19d421802d382a5c09e3c4b116174f21[m
+Author: Leidi <leididelapuente3@gmail.com>
+Date:   Sun Oct 1 21:20:05 2023 -0500
+
+    Funcion listar y agregar usuarios
+
+[33mcommit 722fc3705ac18535fcbcf97908a5aeea75758866[m[33m ([m[1;31mcliente/main[m[33m)[m
+Author: Leidi <leididelapuente3@gmail.com>
+Date:   Sun Sep 24 22:52:58 2023 -0500
+
+    Fetch a la api
+
+[33mcommit 91620ceb48e809e0633b7c8c4e29f0a4a588de49[m
+Merge: 8b741de 4509428
+Author: Leidi <leididelapuente3@gmail.com>
+Date:   Sun Sep 24 22:48:09 2023 -0500
+
+    Merge branch 'main' of https://github.com/Jimmy2004S/Plataforma-Proaula into client
+
+[33mcommit 45094280bc8ce8f40326e1eeef137318cc983890[m
+Merge: de7d735 7798a88
+Author: Jimmy2004S <tucorreo@example.com>
+Date:   Sun Sep 24 22:46:26 2023 -0500
+
+    Merge branch 'main' of https://github.com/Jimmy2004S/Plataforma-Proaula into api
+
+[33mcommit de7d7353a185ada22ca16d579283a4e7e7ca6991[m
+Author: Jimmy2004S <tucorreo@example.com>
+Date:   Sun Sep 24 22:45:50 2023 -0500
+
+    API : URL Eliminar registro no deseado (administrador)
+
+[33mcommit 8b741de21279489f7469ab79c3f78e0ad3cdeacc[m
+Author: Leidi <leididelapuente3@gmail.com>
+Date:   Sun Sep 24 22:32:45 2023 -0500
+
+    Estado gloibal del usuarioso
+
+[33mcommit 3ed9f2d27b0e1e52957d56045f9e0db73030acf9[m
+Author: Leidi <leididelapuente3@gmail.com>
+Date:   Sun Sep 24 20:49:43 2023 -0500
+
+    Componente Formulario registro y paginas de registro
+
+[33mcommit 1820d4b12cf27f7d9d82523717061f13e0194640[m
+Author: Jimmy2004S <tucorreo@example.com>
+Date:   Thu Sep 21 15:36:57 2023 -0500
+
+    API : URL cambiar estado de usuario
+
+[33mcommit a3949d7c586479a303e6170007fd19abaf0ebd13[m
+Author: Jimmy2004S <tucorreo@example.com>
+Date:   Wed Sep 20 23:45:00 2023 -0500
+
+    URl para registros de usuarios
+
+[33mcommit 06b69c1a26dfbd1ab6318b75bf66b7fc1f20c77a[m
+Author: Jimmy2004S <tucorreo@example.com>
+Date:   Wed Sep 20 12:03:20 2023 -0500
+
+    Generar registros de usuarios de prueba
+
+[33mcommit 7798a88720f064f8fd33b7b8f0cd21d1679e6721[m
+Author: Leidi <leididelapuente3@gmail.com>
+Date:   Mon Sep 18 17:27:54 2023 -0500
+
+    configuracion de la carpeta client
+
+[33mcommit 0a32aa2b08921d1589cfe9e80839c0f2e4babc67[m
+Author: Jimmy2004S <tucorreo@example.com>
+Date:   Sun Sep 17 07:03:03 2023 -0500
+
+    first commit

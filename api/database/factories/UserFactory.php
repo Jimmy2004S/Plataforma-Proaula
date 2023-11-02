@@ -19,18 +19,11 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
-        $nombres = $this->faker->firstName;
-        $apellidos = $this->faker->lastName;
         $email = $this->faker->unique()->safeEmail;
-        $identificacion = $this->faker->unique()->numerify('##########'); // Genera un número de 10 dígitos
         return [
-            'nombre' => $nombres,
-            'apellidos' => $apellidos,
-            'email' => $email,
-            'identificacion' => $identificacion,
-            'estados' => $this->faker->randomElement([1, 2]),
-            'email_verified_at' => now(),
             'password' => bcrypt('password'), // Puedes establecer una contraseña fija o generar una aleatoria
+            'estado' => $this->faker->randomElement([0, 1]),
+            'email_verified_at' => now(),
             'remember_token' => Str::random(10),
         ];
     }

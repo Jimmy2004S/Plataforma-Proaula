@@ -6,21 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Estudiante extends Model
+class Post extends Model
 {
     use HasFactory;
 
-
-    //Relacion uno a uno inversa
-    public function user()
-    {
-    return $this->belongsTo(User::class);
-    }
-
-
     //Relacion uno a muchos inversa
-    public function carrera(): BelongsTo
+    public function post(): BelongsTo
     {
-        return $this->belongsTo(Carrera::class);
+        return $this->belongsTo(User::class);
     }
 }
