@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Carrera;
-use App\Models\Departamento;
-use App\Models\Estudiante;
-use App\Models\Profesor;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +37,6 @@ class UserController extends Controller
             "codigo" => "required|int",
             "password" => "required|min:8"
         ]);
-
         if($validator->fails()){
             return response()->json([
                 'status' => false,
@@ -48,7 +44,8 @@ class UserController extends Controller
             ],400);
         }
             $codigo = $request->codigo;
-            $response = http::get("http://localhost/api_uni/api.php?action=get_user&codigo=$codigo");
+            $controller = new Controller();
+            $response = $controller->apiUser($codigo);
             if($response -> successful()){
                 $api = $response->json();
                 $user = new user();
@@ -66,11 +63,18 @@ class UserController extends Controller
                     'message' => 'create',
                     'token' => $user->createToken('API TOKEN')->plainTextToken
                 ],200);
-            }else{
+            }
+            if($response->status() == 404){
                 return response()->json([
                     'status' => false,
-                    'errors' => ['Unauthorized']
-                ], 401);
+                    'errors' => 'No existente'
+                ], 404);
+            }
+            if($response->status() == 405){
+                return response()->json([
+                    'status' => false,
+                    'errors' => 'Accion no permitida'
+                ]);
             }
 
     }
@@ -78,16 +82,17 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
-        //
+        $controller = new Controller();
+        $controller->existePersona($id);
     }
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**
@@ -100,43 +105,81 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-            if($validator->fails()){
+        //Reglas del request
+        try{
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+                'password' => 'required',
+            ]);
+                //Validaciones del request
+                if($validator->fails()){
+                    return response()->json([
+                        'status' => false,
+                        'errors' => $validator -> errors()->all()
+                    ], 400);
+                }
+                //Validar si el usuario existe
+                if(!Auth::attempt($request->only('email' , 'password'))){
+                    return response()->json([
+                        'status' => false,
+                        'errors' => ['Unauthorized']
+                    ],401);
+                }
+                //Buscar al usuario autentificado y crear un token
+                $user = User::where('email', $request->email)->first();
                 return response()->json([
-                    'status' => false,
-                    'errors' => $validator -> errors()->all()
-                ], 400);
-            }
-            if(!Auth::attempt($request->only('email' , 'password'))){
-                return response()->json([
-                    'status' => false,
-                    'errors' => ['Unauthorized']
-                ],401);
-            }
-            $user = User::where('email', $request->email)->first();
+                    'status' => true,
+                    'message' => 'Looged',
+                    'data' => $user,
+                    'token' => $user->createToken('API TOKEN')->plainTextToken
+                ], 200);
+        }catch(Exception $e){
             return response()->json([
-                'status' => true,
-                'message' => 'Looged',
-                'data' => $user,
-                'token' => $user->createToken('API TOKEN')->plainTextToken
-            ], 200);
+                'status' => false,
+                'message' => $e
+            ],500);
+        }
+
     }
 
     public function logout(){
-         // Obtén al usuario autenticado actual
+        try{
+             // Obtén al usuario autenticado actual
+            $user = Auth::user();
+            if(!$user){
+                return $response = response()->json([
+                    'status' => false,
+                    'error' => 'No hay login'
+                ], 404);
+            }
+
+            // Revoca todos los tokens de acceso del usuario
+            $user->tokens->each(function ($token, $key) {
+                $token->delete();
+            });
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Logout exitoso'
+            ], 200);
+        }catch(Exception $e){
+            return $e->getMessage();
+        }
+
+    }
+
+    public function userLogueado(){
         $user = Auth::user();
-
-        // Revoca todos los tokens de acceso del usuario
-        $user->tokens->each(function ($token, $key) {
-            $token->delete();
-        });
-
+        if(!$user){
+            return response()->json([
+                'status' => false,
+                'errors' => 'No hay usuario logueado'
+            ],404);
+        }
         return response()->json([
-            'status' => true,
-            'message' => 'Logout exitoso'
-        ], 200);
+            'status' =>  true,
+            'message' => 'exitos',
+            'data' => $user
+        ],200);
     }
 }

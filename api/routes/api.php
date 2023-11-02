@@ -24,12 +24,13 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth:sanctum'])->group(function(){
-    Route::get('user' , [UserController::class, 'index']);
+
     Route::get('logout' , [UserController::class, 'logout']);
 });
 
 
 Route::controller(UserController::class)->group(function(){
+    Route::get('user' , 'index');
     Route::get('user/{user}' , 'show');
     Route::put('user/{user}' , 'update');
     Route::delete('user/desactivarCuenta/{user}' , 'destroy');
