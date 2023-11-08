@@ -3,24 +3,23 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 export const apiSlice = createApi({
     name: "api", 
     baseQuery: fetchBaseQuery({
+<<<<<<< HEAD
         baseUrl: 'http://127.0.0.1:8000/api/'
+=======
+        baseUrl: 'https://7fd7-190-242-43-83.ngrok-free.app/api/'
+>>>>>>> client
     }),
 
     endpoints: (builder) =>({
         getUser: builder.query({
             query: () => 'user',
             providesTags: ["Users"],
-            method: "GET",
-            cors: false,
-            credentials: 'include',
         }),
         createUser: builder.mutation({
             query: (newUser) =>({
                 url: 'user',
                 method: 'POST',
                 body: newUser,
-                cors: false,
-                credentials: 'include',
             }),
             invalidatesTags: ["Users"]
         }),
@@ -28,8 +27,6 @@ export const apiSlice = createApi({
             query: (id)=>({
                 url: `user/${id}`, 
                 method: "DELETE",
-                cors: false,
-                credentials: 'include',
             }),
             invalidatesTags: ["Users"]
         }),
@@ -38,11 +35,16 @@ export const apiSlice = createApi({
                 url: 'login',
                 method: 'POST',
                 body: userData,
-                cors: false,
-                credentials: 'include',
             }),
         }),
+        createProject: builder.mutation({
+            query: (projectData) =>({
+                url: 'project',
+                method: 'POST',
+                body: projectData,
+            }),
+        })
     })
 })
 
-export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation} = apiSlice
+export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation, useCreateProjectMutation} = apiSlice

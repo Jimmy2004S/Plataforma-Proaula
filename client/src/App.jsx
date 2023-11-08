@@ -8,6 +8,7 @@ import { IndexAdminPage } from "./pages/Admin/IndexAdminPage";
 import { IndexStudentPage } from "./pages/students/IndexStudentsPage";
 import { IndexProfessorPage } from "./pages/professors/IndexProfessorPage";
 import { RegistroUsuariosPage } from "./pages/Admin/RegistroUsuariosPage";
+import { ProjectFormPage } from "./pages/students/ProjectFormPage";
 import { Nav } from "./components/admin/Nav";
 import { useSelector } from "react-redux";
 
@@ -33,6 +34,7 @@ function App() {
           )}
           <Route path="/users-list" element={<RegistroUsuariosPage />} />
           <Route path="/reportes" element={<Reportes />} />
+          <Route path="/project-form" element={<ProjectFormPage />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,0 +1,77 @@
+@use "../mixins/mixin-flex.scss";
+
+.nav {
+  background-color: #005aa9;
+  color: #fff;
+  @include mixin-flex.form-flex;
+  justify-content: space-between;
+  padding: 1.2rem;
+  margin-bottom: 2%;
+}
+
+.nav__container > * {
+  margin-right: 0.6rem;
+}
+
+.nav__button {
+  background-color: inherit;
+  border: none;
+  font-size: 0.9rem;
+}
+
+.form {
+  background-color: ghostwhite;
+  padding: 1.6rem 3rem;
+  width: 80%;
+  max-width: 510px;
+  margin: 2.2rem auto;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+  &__title {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.7rem;
+  }
+
+  &__input, &__label, &__button{
+    display: block;
+  }
+
+  &__input {
+    margin-bottom: 1rem;
+  }
+
+  &__textarea {
+    resize: none;
+    width: 100%;
+    padding: 0.4rem;
+    font-size: 1.1rem;
+    border-radius: 0.3rem;
+    border: 1.5px solid #005aa9;
+    &:focus{
+      outline: 1.5px solid lightblue;
+    }
+  }
+
+  &__label {
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  &__button {
+    width: 65%;
+    margin-top: 1.2rem;
+    margin-inline: auto;
+    border: none;
+    background-color: #00A859;
+    color: #fff;
+    padding: 0.9rem;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    font-weight: 600;
+
+    &:hover{
+      background-color: #019650;
+    }
+  }
+}

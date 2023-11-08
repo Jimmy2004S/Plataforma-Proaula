@@ -1,5 +1,6 @@
 import defaultIcon from "../../assets/images/default-icon.jpg";
 import { useDeleteUserMutation } from "../../api/apiSlice";
+import PropTypes from 'prop-types';
 
 export const RegistroCard = ({ user }) => {
   const [deleteUser] = useDeleteUserMutation();
@@ -27,8 +28,8 @@ export const RegistroCard = ({ user }) => {
           className="card__image"
         />
         <div className="card__info">
-          <p className="card__text--bold">{user.nombre}</p>
-          <p className="card__text--light">{user.codigo}</p>
+          <p className="card__text--bold">{user.user_name}</p>
+          <p className="card__text--light">{user.email}</p>
         </div>
       </div>
       <div className="card__container--right">
@@ -54,3 +55,11 @@ export const RegistroCard = ({ user }) => {
     </div>
   );
 };
+
+RegistroCard.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number,
+    email: PropTypes.string,
+    user_name: PropTypes.string,
+  })
+}
