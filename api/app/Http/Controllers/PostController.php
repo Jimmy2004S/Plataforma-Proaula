@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Contracts\Validation\Validator;
+
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -23,6 +25,15 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()->all()
+            ]);
+        }
         
     }
 
