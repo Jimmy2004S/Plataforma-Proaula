@@ -11,7 +11,8 @@ export const LogInPage = () => {
   const dispatch = useDispatch();
   const [login] = useLoginUserMutation();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     console.log("Enviar")
     try {
     console.log("Envia")

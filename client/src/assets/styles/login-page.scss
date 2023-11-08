@@ -1,12 +1,12 @@
 @use 'reset.scss';
-@use './mixins/mixin-form.scss';
+@use './mixins/mixin-flex.scss';
 
 body{
     background-color: whitesmoke;
 }
 
 .Flex-container{
-    @include mixin-form.form-flex;
+    @include mixin-flex.form-flex;
     margin: 2rem auto;
     width: 80%;
     max-width: 870px;
