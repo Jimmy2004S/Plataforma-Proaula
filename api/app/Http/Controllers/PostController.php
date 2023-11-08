@@ -28,18 +28,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             "descripcion" => "required"
         ]);
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors()->all()
             ]);
         }
         $post = new Post();
-        $post -> descripcion = $request->descripcion;
-        $post -> user_id = 2;
+        $post->descripcion = $request->descripcion;
+        $post->user_id = 2;
         $post->save();
         return response()->json([
             'status' => true,
@@ -83,30 +83,40 @@ class PostController extends Controller
         ], 200);
     }
 
-    public function misPosts(){
+    public function misPosts()
+    {
         $user = Auth::user();
-        if(!$user){
+        if (!$user) {
             return response()->json([
                 'status' => false,
                 'message' => 'Usuario no logueado'
-            ] , 401);
+            ], 401);
         }
         $posts = DB::select('select * from post where user_id = ?', [$user->id]);
         return response()->json([
             'status' => true,
             'message' => 'Exitos',
             'data' => $posts
-        ] , 200);
+        ], 200);
     }
 
 
-    public function filtrarProyectos(mixed $busqueda){
-        $posts = DB::table('posts as p')
-        ->join('users as u' , 'p.user_id' , '=' , 'u.id')
-        ->where('u.user_name' , 'like' , $busqueda.'%')
-        ->orderBy('created_at');
+    public function filtrarProyectos($busqueda)
+    {
 
-        if(!$posts){
+        $controller = new Controller();
+        $response = $controller->filtrarEstudiantes('Ad');
+        $api = $response->json();
+        $posts = DB::table('posts as p')
+            ->join('users as u', 'p.user_id', '=', 'u.id')
+            ->where('u.user_name', 'like', '%' . $busqueda . '%')
+            ->orWhere('p.user_id' , '=' , $api['id'] )
+            ->orderBy('p.created_at', 'desc')
+            ->select('p.*', 'u.user_name as user_name')
+            ->get();
+
+
+        if (!$posts) {
             return response()->json([
                 'status' => true,
                 'message' => 'No se encontraron coincidencias'
@@ -116,6 +126,6 @@ class PostController extends Controller
         return response()->json([
             'status' => true,
             'data' => $posts
-        ] , 200);
+        ], 200);
     }
 }

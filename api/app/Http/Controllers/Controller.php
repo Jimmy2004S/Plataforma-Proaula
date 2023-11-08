@@ -44,6 +44,10 @@ class Controller extends BaseController
         }*/
     }
 
+    public function filtrarEstudiantes($busqueda){
+        $response = Http::get("http://localhost/api_uni/api.php?action=filtrar_estudiantes&busqueda=$busqueda");
+        return $response;
+    }
 
     public function existePersona(int $id)
     {
