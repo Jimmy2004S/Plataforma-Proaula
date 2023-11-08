@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Models\Perfil;
 use Illuminate\Http\Request;
@@ -24,7 +25,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth:sanctum'])->group(function(){
-
     Route::get('logout' , [UserController::class, 'logout']);
 });
 
@@ -36,6 +36,11 @@ Route::controller(UserController::class)->group(function(){
     Route::delete('user/desactivarCuenta/{user}' , 'destroy');
     Route::post('login' , 'login');
     Route::post('user' , 'store');
+});
+
+Route::controller(PostController::class)->group(function(){
+    Route::get('post' , 'index');
+    Route::post('post' , 'store');
 });
 
 Route::controller(AdminController::class)->group(function(){

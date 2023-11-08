@@ -26,7 +26,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-
+            "descripcion" => "required"
         ]);
         if($validator->fails()){
             return response()->json([
@@ -34,7 +34,14 @@ class PostController extends Controller
                 'errors' => $validator->errors()->all()
             ]);
         }
-        
+        $post = new Post();
+        $post -> descripcion = $request->descripcion;
+        $post -> user_id = 2;
+        $post->save();
+        return response()->json([
+            'status' => true,
+            'message' => 'create'
+        ], 200);
     }
 
     /**
