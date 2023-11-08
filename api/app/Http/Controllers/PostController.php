@@ -6,7 +6,10 @@ use App\Models\Post;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Expr\Cast\Object_;
 
 class PostController extends Controller
 {
@@ -73,6 +76,46 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return response()->json([
+            'status' => true,
+            'message' => 'Post eliminado'
+        ], 200);
+    }
+
+    public function misPosts(){
+        $user = Auth::user();
+        if(!$user){
+            return response()->json([
+                'status' => false,
+                'message' => 'Usuario no logueado'
+            ] , 401);
+        }
+        $posts = DB::select('select * from post where user_id = ?', [$user->id]);
+        return response()->json([
+            'status' => true,
+            'message' => 'Exitos',
+            'data' => $posts
+        ] , 200);
+    }
+
+
+    public function filtrarProyectos(mixed $busqueda){
+        $posts = DB::table('posts as p')
+        ->join('users as u' , 'p.user_id' , '=' , 'u.id')
+        ->where('u.user_name' , 'like' , $busqueda.'%')
+        ->orderBy('created_at');
+
+        if(!$posts){
+            return response()->json([
+                'status' => true,
+                'message' => 'No se encontraron coincidencias'
+            ], 400);
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $posts
+        ] , 200);
     }
 }

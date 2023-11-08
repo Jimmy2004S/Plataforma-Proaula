@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum'])->group(function(){
     Route::get('logout' , [UserController::class, 'logout']);
+    Route::get('userLogueado' , [UserController::class , 'userLogueado']);
 });
 
 
@@ -41,6 +42,8 @@ Route::controller(UserController::class)->group(function(){
 Route::controller(PostController::class)->group(function(){
     Route::get('post' , 'index');
     Route::post('post' , 'store');
+    Route::get('user/misPosts' , 'misPosts');
+    Route::get('filtrar/{busqueda}' , 'filtrarProyectos');
 });
 
 Route::controller(AdminController::class)->group(function(){
