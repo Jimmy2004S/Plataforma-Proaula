@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-
-
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,23 +27,31 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            "descripcion" => "required"
-        ]);
-        if ($validator->fails()) {
+        try{
+            $validator = Validator::make($request->all(), [
+                "descripcion" => "required"
+            ]);
+            if ($validator->fails()) {
+                return response()->json([
+                    'status' => false,
+                    'errors' => $validator->errors()->all()
+                ], 400);
+            }
+            $post = new Post();
+            $post->descripcion = $request->descripcion;
+            $post->user_id = 4;
+            $post->save();
+            return response()->json([
+                'status' => true,
+                'message' => 'create'
+            ], 200);
+        }catch(Exception $e){
             return response()->json([
                 'status' => false,
-                'errors' => $validator->errors()->all()
-            ]);
+                'message' => $e
+            ],401);
         }
-        $post = new Post();
-        $post->descripcion = $request->descripcion;
-        $post->user_id = 2;
-        $post->save();
-        return response()->json([
-            'status' => true,
-            'message' => 'create'
-        ], 200);
+
     }
 
     /**
@@ -105,7 +112,7 @@ class PostController extends Controller
     {
 
         $controller = new Controller();
-        $response = $controller->filtrarEstudiantes('Ad');
+        $response = $controller->filtrarEstudiantes($busqueda);
         $api = $response->json();
         $posts = DB::table('posts as p')
             ->join('users as u', 'p.user_id', '=', 'u.id')

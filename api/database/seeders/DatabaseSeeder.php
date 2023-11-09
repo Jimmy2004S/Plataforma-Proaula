@@ -61,7 +61,7 @@ class DatabaseSeeder extends Seeder
                     'rol_id' => $rol_id,
                 ]);
                 // Asocia tres publicaciones (posts) al usuario recién creado.
-                $posts = Post::factory(3)->create([
+                $posts = Post::factory(1)->create([
                     'user_id' => $user->id
                 ]);
                 $user->posts()->saveMany($posts);

@@ -11,9 +11,10 @@ export const ProjectForm = () => {
   const handleSubmit = async (e) =>{
     e.preventDefault();
     try{
-      const response = await createProject({ description: projectDescription });
-      console.log("exito", response)
-      setProjectDescription("");
+      const response = await createProject(projectDescription);
+      console.log("exito: ", response);
+      console.log(projectDescription);
+      setProjectDescription();
     }catch(error){
       console.error(error);
     }
