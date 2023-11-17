@@ -19,7 +19,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-   public function index()
+    public function index()
     {
         $users = User::all();
         return response()->json($users);
@@ -32,51 +32,52 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        $validator = Validator::make($request->all(),
-        [
-            "codigo" => "required|int",
-            "password" => "required|min:8"
-        ]);
-        if($validator->fails()){
+        $validator = Validator::make(
+            $request->all(),
+            [
+                "codigo" => "required|int",
+                "password" => "required|min:8"
+            ]
+        );
+        if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'errors' => $validator->errors()->all()
-            ],400);
+            ], 400);
         }
-            $codigo = $request->codigo;
-            $controller = new Controller();
-            $response = $controller->apiUser($codigo);
-            if($response -> successful()){
-                $api = $response->json();
-                $user = new user();
-                $user -> user_name = $api['nombre'] . '_' . $user->id;
-                $user -> email = $api['email'];
-                $user -> password = Hash::make($request->password);
-                if($api['tipo'] == 'Estudiante'){
-                    $user -> rol_id = 2;
-                }elseif($api['api'] == 'Profesor'){
-                    $user -> rol_id = 3;
-                }
-                $user -> save();
-                return response()->json([
-                    'status' => true,
-                    'message' => 'create',
-                    'token' => $user->createToken('API TOKEN')->plainTextToken
-                ],200);
+        $codigo = $request->codigo;
+        $controller = new Controller();
+        $response = $controller->apiUser($codigo);
+        if ($response->successful()) {
+            $api = $response->json();
+            $user = new user();
+            $user->user_name = $api['nombre'] . '_' . $user->id;
+            $user->email = $api['email'];
+            $user->password = Hash::make($request->password);
+            if ($api['tipo'] == 'Estudiante') {
+                $user->rol_id = 2;
+            } elseif ($api['api'] == 'Profesor') {
+                $user->rol_id = 3;
             }
-            if($response->status() == 404){
-                return response()->json([
-                    'status' => false,
-                    'errors' => 'No existente'
-                ], 404);
-            }
-            if($response->status() == 405){
-                return response()->json([
-                    'status' => false,
-                    'errors' => 'Accion no permitida'
-                ]);
-            }
-
+            $user->save();
+            return response()->json([
+                'status' => true,
+                'message' => 'create',
+                'token' => $user->createToken('API TOKEN')->plainTextToken
+            ], 200);
+        }
+        if ($response->status() == 404) {
+            return response()->json([
+                'status' => false,
+                'errors' => 'No existente'
+            ], 404);
+        }
+        if ($response->status() == 405) {
+            return response()->json([
+                'status' => false,
+                'errors' => 'Accion no permitida'
+            ]);
+        }
     }
 
     /**
@@ -92,7 +93,6 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
     }
 
     /**
@@ -106,47 +106,49 @@ class UserController extends Controller
     public function login(Request $request)
     {
         //Reglas del request
-        try{
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'password' => 'required',
-            ]);
-                //Validaciones del request
-                if($validator->fails()){
-                    return response()->json([
-                        'status' => false,
-                        'errors' => $validator -> errors()->all()
-                    ], 400);
-                }
-                //Validar si el usuario existe
-                if(!Auth::attempt($request->only('email' , 'password'))){
-                    return response()->json([
-                        'status' => false,
-                        'errors' => ['Unauthorized']
-                    ],401);
-                }
-                //Buscar al usuario autentificado y crear un token
-                $user = User::where('email', $request->email)->first();
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Looged',
-                    'data' => $user,
-                    'token' => $user->createToken('API TOKEN')->plainTextToken
-                ], 200);
-        }catch(Exception $e){
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+        //Validaciones del request
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()->all()
+            ], 400);
+        }
+        //Validar si el usuario existe
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'status' => false,
+                'errors' => ['Unauthorized']
+            ], 401);
+        }
+
+        try {
+            //Buscar al usuario autentificado y crear un token
+            $user = User::where('email', $request->email)->first();
+            return response()->json([
+                'status' => true,
+                'message' => 'Looged',
+                'data' => $user,
+                'token' => $user->createToken('API TOKEN')->plainTextToken
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'status' => false,
                 'message' => $e
-            ],500);
+            ], 500);
         }
-
     }
 
-    public function logout(){
-        try{
-             // Obtén al usuario autenticado actual
+    public function logout()
+    {
+        try {
+            // Obtén al usuario autenticado actual
             $user = Auth::user();
-            if(!$user){
+            if (!$user) {
                 return $response = response()->json([
                     'status' => false,
                     'error' => 'No hay login'
@@ -162,24 +164,24 @@ class UserController extends Controller
                 'status' => true,
                 'message' => 'Logout exitoso'
             ], 200);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return $e->getMessage();
         }
-
     }
 
-    public function userLogueado(){
+    public function userLogueado()
+    {
         $user = Auth::user();
-        if(!$user){
+        if (!$user) {
             return response()->json([
                 'status' => false,
                 'errors' => 'No hay usuario logueado'
-            ],404);
+            ], 404);
         }
         return response()->json([
             'status' =>  true,
             'message' => 'exitos',
             'data' => $user
-        ],200);
+        ], 200);
     }
 }

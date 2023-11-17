@@ -3,7 +3,7 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 export const apiSlice = createApi({
     name: "api", 
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://127.0.0.1:8000/api/'
+        baseUrl: 'https://5303-181-143-211-148.ngrok-free.app/api/'
     }),
 
     endpoints: (builder) =>({

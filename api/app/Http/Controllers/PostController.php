@@ -17,8 +17,19 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post = Post::all();
-        return response()->json($post);
+
+        try {
+            $post = Post::all();
+            return response()->json([
+                'status' => true,
+                'data' => $post
+            ], 200)->header('Content-Type', 'application/json');
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => true,
+                'message' => $e
+            ], 500);
+        }
     }
 
 
@@ -27,16 +38,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            $validator = Validator::make($request->all(), [
-                "descripcion" => "required"
-            ]);
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => false,
-                    'errors' => $validator->errors()->all()
-                ], 400);
-            }
+
+        $validator = Validator::make($request->all(), [
+            "descripcion" => "required"
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()->all()
+            ], 400);
+        }
+        try {
             $post = new Post();
             $post->descripcion = $request->descripcion;
             $post->user_id = 4;
@@ -45,13 +57,12 @@ class PostController extends Controller
                 'status' => true,
                 'message' => 'create'
             ], 200);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return response()->json([
                 'status' => false,
                 'message' => $e
-            ],401);
+            ], 401);
         }
-
     }
 
     /**
@@ -62,20 +73,35 @@ class PostController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            "descripcion" => "required"
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'errors' => $validator->errors()->all()
+            ], 400);
+        }
+        try {
+            $post->descripcion = $request->descripcion;
+            $post->user_id = 4;
+            $post->save();
+            return response()->json([
+                'status' => true,
+                'message' => 'create'
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e
+            ], 401);
+        }
     }
 
     /**
@@ -83,6 +109,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
         $post->delete();
         return response()->json([
             'status' => true,
@@ -117,11 +144,10 @@ class PostController extends Controller
         $posts = DB::table('posts as p')
             ->join('users as u', 'p.user_id', '=', 'u.id')
             ->where('u.user_name', 'like', '%' . $busqueda . '%')
-            ->orWhere('p.user_id' , '=' , $api['id'] )
+            ->orWhere('p.user_id', '=', $api['id'])
             ->orderBy('p.created_at', 'desc')
             ->select('p.*', 'u.user_name as user_name')
             ->get();
-
 
         if (!$posts) {
             return response()->json([
