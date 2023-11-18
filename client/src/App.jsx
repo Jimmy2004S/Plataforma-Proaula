@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 
 function App() {
   const loggedIn = useSelector((state) => state.user.loggedIn);
-  const userType = useSelector((state) => state.user.user?.type);
+  const rol_id = useSelector((state) => state.user.user?.rol_id);
 
   return (
     <>
@@ -23,18 +23,19 @@ function App() {
           <Route path="/" element={<LogInPage />} />
           <Route path="/register-page" element={<RegisterPage />} />
           <Route path="/register-page" element={<RegisterPage />} />
-          {loggedIn && userType === '3' && (
+          {loggedIn && rol_id === '3' && (
             <Route path="/indexProfessors" element={<IndexProfessorPage />} />
           )}
-          {loggedIn && userType === "2" && (
+          {/* `{loggedIn && rol_id === "2" && (
             <Route path="/indexStudents" element={<IndexStudentPage />} />
-          )}
-          {loggedIn && userType === "1" && (
+          )}` */}
+          {loggedIn && rol_id === "1" && (
             <Route path="/indexAdmin" element={<IndexAdminPage />} />
           )}
           <Route path="/users-list" element={<RegistroUsuariosPage />} />
           <Route path="/reportes" element={<Reportes />} />
           <Route path="/project-form" element={<ProjectFormPage />} />
+          <Route path="/indexStudents" element={<IndexStudentPage />} />
         </Routes>
       </BrowserRouter>
     </>

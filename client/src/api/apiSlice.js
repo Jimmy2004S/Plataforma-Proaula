@@ -3,11 +3,7 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 export const apiSlice = createApi({
     name: "api", 
     baseQuery: fetchBaseQuery({
-<<<<<<< HEAD
         baseUrl: 'http://127.0.0.1:8000/api/'
-=======
-        baseUrl: 'https://7fd7-190-242-43-83.ngrok-free.app/api/'
->>>>>>> client
     }),
 
     endpoints: (builder) =>({
@@ -39,11 +35,11 @@ export const apiSlice = createApi({
         }),
         createProject: builder.mutation({
             query: (projectData) =>({
-                url: 'project',
+                url: 'post',
                 method: 'POST',
                 body: projectData,
             }),
-        })
+        }),
     })
 })
 

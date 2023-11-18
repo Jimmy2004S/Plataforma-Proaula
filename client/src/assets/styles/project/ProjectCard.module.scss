@@ -1,0 +1,38 @@
+.card{
+    background-color: ghostwhite;
+    width: 95%;
+    padding: 0.8rem 0.5rem 0.9rem 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    &__img{
+        width: 100%;
+    }
+    &__title{
+        margin: 0.4rem 0;
+        color: #00A859;
+        font-weight: bold;
+    }
+    &__description{
+        font-style: italic;
+    }
+    &__button{
+        margin-top: 1rem;
+        border: none;
+        width: 35px;
+        padding: 0.5rem 0.4rem;
+        border-radius: 0.3rem;
+        font-size: 1rem;
+        text-align: center;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    }
+    &__button__normal{
+        @extend .card__button;
+        color: crimson;
+    }
+    &__button__active{
+        @extend .card__button;
+        background-color: crimson;
+        color: #fff;
+    }
+}
+
+

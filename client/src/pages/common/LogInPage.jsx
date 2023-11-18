@@ -1,9 +1,10 @@
 import "../../assets/styles/login-page.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginSuccess} from "../../features/users/userSlice";
 import { useLoginUserMutation } from "../../api/apiSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+
 
 export const LogInPage = () => {
   const [userCode, setUserCode] = useState("");
@@ -11,22 +12,36 @@ export const LogInPage = () => {
   const dispatch = useDispatch();
   const [login] = useLoginUserMutation();
 
+  const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Enviar")
+
     try {
-    console.log("Envia")
       const response = await login({ userCode, password });
       console.log("Exito", response);
       if (response.data.token) {
-    console.log("Enviar")
+        const user = response.data.user;
+        const token = response.data.token;
+
         dispatch(
           loginSuccess({
-            user: { type: response.data.userType },
+            user: { rol_id: response.data.rol_id},
             token: response.data.token,
           })
         );
-      console.log("Exito", response);
+
+        console.log("Usuario:", user);
+        console.log("Token:", token);
+
+        if (user.rol_id === "1") {
+          navigate('/indexAdmin');
+        } else if (user.rol_id === "2") {
+          navigate('/indexStudents');
+        } else if (user.rol_id === "3") {
+          navigate('/indexProfessors');
+        }
+      console.log(response.data)
       } else {
         console.error("Error al iniciar sesion", response.data.error);
       }
@@ -50,7 +65,7 @@ export const LogInPage = () => {
       <form method="post" className="Form" onSubmit={handleLogin}>
         <h3 className="Form__title">Inicia Sesion</h3>
         <label htmlFor="codigo" className="Form__label">
-          Codigo
+          Email
         </label>
         <input type="text" name="email" id="codigo" className="Form__input" value={userCode} onChange={(e)=>{setUserCode(e.target.value)}}/>
         <label htmlFor="contrasenia" className="Form__label">
