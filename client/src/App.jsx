@@ -11,12 +11,9 @@ import { RegistroUsuariosPage } from "./pages/Admin/RegistroUsuariosPage";
 import { ProjectFormPage } from "./pages/students/ProjectFormPage";
 import { ProjectDetail } from "./pages/common/ProjectDetail";
 import { Nav } from "./components/admin/Nav";
-import { useSelector } from "react-redux";
 import { Buscador } from "./pages/common/Buscador";
 
 function App() {
-  const loggedIn = useSelector((state) => state.user.loggedIn);
-  const rol_id = useSelector((state) => state.user.user?.rol_id);
 
   return (
     <>
@@ -25,13 +22,8 @@ function App() {
           <Route path="/" element={<LogInPage />} />
           <Route path="/register-page" element={<RegisterPage />} />
           <Route path="/register-page" element={<RegisterPage />} />
-          {loggedIn && rol_id === "3" && (
-            <Route path="/indexProfessors" element={<IndexProfessorPage />} />
-          )}
-          {/* `{loggedIn && rol_id === "2" && (
-            <Route path="/indexStudents" element={<IndexStudentPage />} />
-          )}` */}
-
+          <Route path="/indexProfessors" element={<IndexProfessorPage />} />
+          <Route path="/indexStudents" element={<IndexStudentPage />} />
           <Route path="/indexAdmin" element={<IndexAdminPage />} />
           <Route path="/users-list" element={<RegistroUsuariosPage />} />
           <Route path="/reportes" element={<Reportes />} />

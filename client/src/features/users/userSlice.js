@@ -10,7 +10,7 @@ const userSlice = createSlice({
 
     reducers: {
         loginSuccess: (state, action)=>{
-            state.user = action.payload.user;
+            state.user = action.payload.data;
             state.token = action.payload.token; 
             state.loggedIn = true;
         }, 
