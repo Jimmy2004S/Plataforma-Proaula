@@ -1,0 +1,19 @@
+import { ProjectCard } from "../../components/project/ProjectCard"
+import { Nav } from "../../components/students/Nav"
+import { CommentForm } from "../../components/comment/CommentForm"
+import { CommentList } from "../../components/comment/CommentList"
+
+export const ProjectDetail = () => {
+    const project = {
+        name: "Project 1",
+        description: "This project aims to develop a mobile application for task management."
+    }
+  return (
+    <div>
+        <Nav/>
+        <ProjectCard project={project}/>
+        <CommentList/>
+        <CommentForm/>
+    </div>
+  )
+}

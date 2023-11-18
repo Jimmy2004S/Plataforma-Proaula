@@ -2,6 +2,8 @@ import ProjectCover from "../../assets/images/ProjectCover.png";
 import styles from "../../assets/styles/project/ProjectCard.module.scss";
 import PropTypes from 'prop-types';
 import { LikeButton } from "./LikeButton";
+import { CommentButton } from "../comment/CommentButton"
+
 export const ProjectCard = ({project}) => {
   return (
     <div className={styles.card}>
@@ -11,6 +13,7 @@ export const ProjectCard = ({project}) => {
         {project.description}
       </p>
       <LikeButton id={project.id}/>
+      <CommentButton/>
     </div>
   );
 };

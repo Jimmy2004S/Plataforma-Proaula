@@ -34,11 +34,11 @@ export const LogInPage = () => {
         console.log("Usuario:", user);
         console.log("Token:", token);
 
-        if (user.rol_id === "1") {
+        if (user.rol_id === 1) {
           navigate('/indexAdmin');
-        } else if (user.rol_id === "2") {
+        } else if (user.rol_id === 2) {
           navigate('/indexStudents');
-        } else if (user.rol_id === "3") {
+        } else if (user.rol_id === 3) {
           navigate('/indexProfessors');
         }
       console.log(response.data)

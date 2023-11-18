@@ -17,7 +17,7 @@ export const LikeButton = (id) => {
     }
   }
   return (
-    <button className={isLiked ? styles.card__button__active : styles.card__button__normal} onClick={()=>{handleOnClick(id)}}>
+    <button className={isLiked ? styles.card__likeButton_active : styles.card__likeButton_normal} onClick={()=>{handleOnClick(id)}}>
       <AiFillHeart />
     </button>
   );

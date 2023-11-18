@@ -4,43 +4,43 @@ import styles from "../../assets/styles/announcement/Announcement.module.scss";
 export const AnnouncementSlider = () => {
   const announcements = [
     {
-      id: "1",
+      id: 1,
       description: "Orientation Day",
     },
     {
-      id: "2",
+      id: 2,
       description: "Career Fair",
     },
     {
-      id: "3",
+      id: 3,
       description: "Guest Lecture: Dr. Jane Smith",
     },
     {
-      id: "4",
+      id: 4,
       description: "Sports Day",
     },
     {
-      id: "5",
+      id: 5,
       description: "Workshop: Entrepreneurship",
     },
     {
-      id: "6",
+      id: 6,
       description: "Seminar: Climate Change",
     },
     {
-      id: "7",
+      id: 7,
       description: "Cultural Fest",
     },
     {
-      id: "8",
+      id: 8,
       description: "Hackathon",
     },
     {
-      id: "9",
+      id: 9,
       description: "Alumni Meet",
     },
     {
-      id: "10",
+      id: 10,
       description: "Research Symposium",
     },
   ];
