@@ -6,7 +6,7 @@
   @include mixin-flex.form-flex;
   justify-content: space-between;
   padding: 1.2rem;
-  margin-bottom: 2.2rem;
+  // margin-bottom: 2.2rem;
 }
 
 .nav__container > * {
@@ -17,6 +17,10 @@
   background-color: inherit;
   border: none;
   font-size: 0.9rem;
+}
+
+.wrapper{
+  margin-top: 1.3rem;
 }
 
 .form {
