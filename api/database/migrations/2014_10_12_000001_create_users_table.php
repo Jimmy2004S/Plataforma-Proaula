@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('user_name')->unique();
+            $table->bigInteger('codigo');
             $table->string('email')->unique();
             $table->enum('estado' , ['0' , '1'])->default('1');
             $table->text('descripcion')->nullable();

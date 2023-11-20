@@ -53,6 +53,7 @@ class UserController extends Controller
             $user = new user();
             $user->user_name = $api['nombre'] . '_' . $user->id;
             $user->email = $api['email'];
+            $user->codigo = $api['codigo'];
             $user->password = Hash::make($request->password);
             if ($api['tipo'] == 'Estudiante') {
                 $user->rol_id = 2;
@@ -106,7 +107,6 @@ class UserController extends Controller
     public function login(Request $request)
     {
         //Reglas del request
-
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
@@ -133,6 +133,7 @@ class UserController extends Controller
                 'status' => true,
                 'message' => 'Looged',
                 'data' => $user,
+                'rol' => $user->rol_id,
                 'token' => $user->createToken('API TOKEN')->plainTextToken
             ], 200);
         } catch (Exception $e) {
@@ -172,16 +173,22 @@ class UserController extends Controller
     public function userLogueado()
     {
         $user = Auth::user();
+        $controller = new Controller();
+        $response = $controller->apiUser($user->codigo);
         if (!$user) {
             return response()->json([
                 'status' => false,
                 'errors' => 'No hay usuario logueado'
             ], 404);
         }
+        $api = $response->json();
         return response()->json([
             'status' =>  true,
             'message' => 'exitos',
-            'data' => $user
+            'data' => $user,
+            'apiUser' => $api
         ], 200);
     }
+
+
 }

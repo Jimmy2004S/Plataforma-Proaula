@@ -39,6 +39,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
 
+        $user = Auth::user();
         $validator = Validator::make($request->all(), [
             "descripcion" => "required"
         ]);
@@ -51,7 +52,7 @@ class PostController extends Controller
         try {
             $post = new Post();
             $post->descripcion = $request->descripcion;
-            $post->user_id = 4;
+            $post->user_id = $user->id;
             $post->save();
             return response()->json([
                 'status' => true,
@@ -66,19 +67,12 @@ class PostController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Post $post)
-    {
-        //
-    }
-
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Post $post)
     {
+
+        $user = Auth::user();
         $validator = Validator::make($request->all(), [
             "descripcion" => "required"
         ]);
@@ -90,11 +84,11 @@ class PostController extends Controller
         }
         try {
             $post->descripcion = $request->descripcion;
-            $post->user_id = 4;
+            $post->user_id = $user->id;
             $post->save();
             return response()->json([
                 'status' => true,
-                'message' => 'create'
+                'message' => 'updated'
             ], 200);
         } catch (Exception $e) {
             return response()->json([
@@ -126,7 +120,7 @@ class PostController extends Controller
                 'message' => 'Usuario no logueado'
             ], 401);
         }
-        $posts = DB::select('select * from post where user_id = ?', [$user->id]);
+        $posts = DB::select('select * from posts where user_id = ?', [$user->id]);
         return response()->json([
             'status' => true,
             'message' => 'Exitos',
@@ -137,17 +131,23 @@ class PostController extends Controller
 
     public function filtrarProyectos($busqueda)
     {
-
         $controller = new Controller();
         $response = $controller->filtrarEstudiantes($busqueda);
         $api = $response->json();
-        $posts = DB::table('posts as p')
-            ->join('users as u', 'p.user_id', '=', 'u.id')
-            ->where('u.user_name', 'like', '%' . $busqueda . '%')
-            ->orWhere('p.user_id', '=', $api['id'])
-            ->orderBy('p.created_at', 'desc')
-            ->select('p.*', 'u.user_name as user_name')
-            ->get();
+        $ids = [];
+        if ($api) {
+            foreach ($api as $userdata) {
+                $ids [] = $userdata['id'];
+            }
+            $posts = DB::table('posts as p')
+                ->join('users as u', 'p.user_id', '=', 'u.id')
+                ->where('u.user_name', 'like', '%' . $busqueda . '%')
+                ->orWhereIn('p.user_id', $ids)
+                ->orderBy('p.created_at', 'desc')
+                ->select('p.descripcion', 'u.user_name as user_name' , 'p.user_id' ,
+                'p.created_at as fecha_publicacion')
+                ->get();
+        }
 
         if (!$posts) {
             return response()->json([
@@ -156,9 +156,18 @@ class PostController extends Controller
             ], 400);
         }
 
+        $data = $posts->map(function ($post) use ($api) {
+            return [
+                'descripcion' => $post->descripcion,
+                'user_name' => $post->user->user_name,
+                'user_id' => $post->user_id,
+                'fecha_publicacion' => $post->fecha_publicacion,
+                'carrera' => $api['carrera'],
+            ];
+        });
         return response()->json([
             'status' => true,
-            'data' => $posts
+            'data' => $posts,
         ], 200);
     }
 }

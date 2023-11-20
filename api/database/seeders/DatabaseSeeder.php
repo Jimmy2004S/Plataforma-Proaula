@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             'user_name' => 'El admin',
             'email' => 'jimmisiitho450@gmail.com',
             'estado' => 1,
+            'codigo' => 0,
             'email_verified_at' => now(),
             'password' => bcrypt('admin'), // Puedes establecer una contraseña fija o generar una aleatoria
             'rol_id' => 1
@@ -55,6 +56,7 @@ class DatabaseSeeder extends Seeder
                 $email = $userData['email'];
                 $user = User::create([
                     'user_name' => $nombre,
+                    'codigo' => $userData['codigo'],
                     'email' => $email,
                     'password' => bcrypt('password'), // Ajusta la contraseña según tus necesidades.
                     'email_verified_at' => now(),
@@ -62,7 +64,8 @@ class DatabaseSeeder extends Seeder
                 ]);
                 // Asocia tres publicaciones (posts) al usuario recién creado.
                 $posts = Post::factory(1)->create([
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
+                    'tipo' => 'Proyecto'
                 ]);
                 $user->posts()->saveMany($posts);
             }
