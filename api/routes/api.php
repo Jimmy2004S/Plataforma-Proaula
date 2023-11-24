@@ -25,31 +25,38 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth:sanctum'])->group(function(){
-    Route::get('logout' , [UserController::class, 'logout']);
-    Route::get('userLogueado' , [UserController::class , 'userLogueado']);
+    Route::controller(PostController::class)->group(function(){
+        Route::get('post' , 'index');
+        Route::post('post' , 'store');
+        Route::delete('post/{post}' , 'destroy');
+        Route::get('user/misPosts' , 'misPosts');
+        Route::get('filtrar/{busqueda}' , 'filtrarProyectos');
+        Route::post('post/{post}/update', 'update');
+    });
+    Route::controller(UserController::class)->group(function(){
+        Route::get('user' , 'index');
+        Route::get('user/{user}' , 'show');
+        Route::put('user/{user}' , 'update');
+        Route::delete('user/desactivarCuenta/{user}' , 'destroy');
+        Route::post('user' , 'store');
+        Route::get('userLogueado' ,  'userLogueado');
+        Route::get('logout' ,  'logout');
+    });
+    Route::controller(AdminController::class)->group(function(){
+        Route::put('admin/user-estado/{user}' , 'estadoUsuario');
+        Route::delete('admin/user-registro/{user}', 'eliminarRegistroUsuario');
+    });
 });
 
 
 Route::controller(UserController::class)->group(function(){
-    Route::get('user' , 'index');
-    Route::get('user/{user}' , 'show');
-    Route::put('user/{user}' , 'update');
-    Route::delete('user/desactivarCuenta/{user}' , 'destroy');
     Route::post('login' , 'login');
     Route::post('user' , 'store');
 });
 
-Route::controller(PostController::class)->group(function(){
-    Route::get('post' , 'index');
-    Route::post('post' , 'store');
-    Route::get('user/misPosts' , 'misPosts');
-    Route::get('filtrar/{busqueda}' , 'filtrarProyectos');
-});
 
-Route::controller(AdminController::class)->group(function(){
-    Route::put('admin/user-estado/{user}' , 'estadoUsuario');
-    Route::delete('admin/user-registro/{user}', 'eliminarRegistroUsuario');
-});
+
+
 
 
 
