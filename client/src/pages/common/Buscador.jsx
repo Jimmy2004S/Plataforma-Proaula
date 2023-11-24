@@ -7,15 +7,13 @@ import Footer from "../../components/common/Footer";
 import { useSelector } from "react-redux";
 import { useFilter } from "../../api/apiSlice";
 import { useState } from "react";
+import { ProjectCard } from "../../components/project/ProjectCard";
 
 export const Buscador = () => {
   const rol = useSelector((state) => state.user.user.rol_id);
   const [busqueda, setbusqueda] = useState("");
   const { data, isLoading, isError, error, refetch } = useFilter(busqueda);
-
-  const handleBusqueda = async () => {
-    refetch();
-  };
+  console.log(data)
   return (
     <div>
       {rol === 1 && <Return />}
@@ -32,7 +30,6 @@ export const Buscador = () => {
           <button
             type="button"
             className={styles.form__button}
-            onClick={() => handleBusqueda(busqueda)}
           >
             <FaSearch />
           </button>
@@ -40,6 +37,8 @@ export const Buscador = () => {
       </div>
       {isLoading && <h3>Cargando</h3>}
       {isError && <h3>{error.message}</h3>}
+      {data && <ProjectCard projects={data} />}
+    
       <Footer />
     </div>
   );

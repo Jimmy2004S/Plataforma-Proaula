@@ -59,4 +59,5 @@ export const apiSlice = createApi({
     })
 })
 
-export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation, useCreateProjectMutation, useGetUserProjectsQuery, useFilter} = apiSlice
+export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation, useCreateProjectMutation, useGetUserProjectsQuery} = apiSlice
+export const { useFilter } = apiSlice;

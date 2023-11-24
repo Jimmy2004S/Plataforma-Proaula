@@ -23,5 +23,15 @@
 }
 
 .nav{
-    
+    display: flex;
+    gap: 0.8rem;
+    justify-content: flex-end;
+    padding-right: 1.4rem;
+
+    &__link{
+        text-decoration: none;
+        color: #3aaa35;
+        font-weight: 600;
+    }
 }
+
