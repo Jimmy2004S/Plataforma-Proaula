@@ -120,9 +120,8 @@ class PostController extends Controller
                 'message' => 'Usuario no logueado'
             ], 401);
         }
-
         try {
-            $posts = DB::select('select * from posts where user_id = ?', [$user->id]);
+            $posts = DB::select('select * from posts where user_id = ?', [3]);
             return response()->json([
                 'status' => true,
                 'message' => 'Exitos',

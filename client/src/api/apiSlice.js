@@ -8,6 +8,7 @@ export const apiSlice = createApi({
             const token = getState().user.token;
             if(token){
                 headers.set('Authorization', `Bearer ${token}`);
+                console.log('Token enviado en la solicitud:', token);
             }
             return headers;
         }
@@ -17,6 +18,12 @@ export const apiSlice = createApi({
         getUser: builder.query({
             query: () => 'user',
             providesTags: ["Users"],
+        }),
+        filter: builder.query({
+            query: (busqueda)=> `filtrar/${busqueda}`
+        }),
+        getUserProjects: builder.query({
+            query: ()=> "user/misPosts",
         }),
         createUser: builder.mutation({
             query: (newUser) =>({
@@ -48,10 +55,8 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ["Projects"]
         }),
-        getUserProjects: builder.query({
-            query: ()=> "user/misPost",
-        }),
+        
     })
 })
 
-export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation, useCreateProjectMutation, useGetUserProjectsQuery} = apiSlice
+export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation, useCreateProjectMutation, useGetUserProjectsQuery, useFilter} = apiSlice
