@@ -120,12 +120,20 @@ class PostController extends Controller
                 'message' => 'Usuario no logueado'
             ], 401);
         }
-        $posts = DB::select('select * from posts where user_id = ?', [$user->id]);
-        return response()->json([
-            'status' => true,
-            'message' => 'Exitos',
-            'data' => $posts
-        ], 200);
+
+        try {
+            $posts = DB::select('select * from posts where user_id = ?', [$user->id]);
+            return response()->json([
+                'status' => true,
+                'message' => 'Exitos',
+                'data' => $posts
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Error en el servidor: ' . $e
+            ]);
+        }
     }
 
 
@@ -137,37 +145,51 @@ class PostController extends Controller
         $ids = [];
         if ($api) {
             foreach ($api as $userdata) {
-                $ids [] = $userdata['id'];
+                $ids[] = $userdata['id'];
             }
             $posts = DB::table('posts as p')
                 ->join('users as u', 'p.user_id', '=', 'u.id')
                 ->where('u.user_name', 'like', '%' . $busqueda . '%')
+                ->orWhere('u.codigo', 'like', '%' . $busqueda . '%')
                 ->orWhereIn('p.user_id', $ids)
                 ->orderBy('p.created_at', 'desc')
-                ->select('p.descripcion', 'u.user_name as user_name' , 'p.user_id' ,
-                'p.created_at as fecha_publicacion')
+                ->select(
+                    'p.descripcion',
+                    'u.user_name as user_name',
+                    'p.user_id',
+                    'p.created_at as fecha_publicacion'
+                )
                 ->get();
+        }
+
+        $data = [];
+
+        foreach ($api as $userData) {
+            foreach ($posts as $post) {
+                if ($post->user_id == $userData['id']) {
+                    $data = [
+                        "descripcion_proyecto" => $post->descripcion,
+                        "user_name" => $post->user_name,
+                        "semestre" => $userData['semestre'],
+                        "carrera" => $userData['nombre_carrera'],
+                        "fecha_publicacion" => $post->fecha_publicacion,
+                        "user_id" => $post->user_id
+                    ];
+                }
+            }
         }
 
         if (!$posts) {
             return response()->json([
-                'status' => true,
+                'status' => false,
                 'message' => 'No se encontraron coincidencias'
             ], 400);
         }
 
-        $data = $posts->map(function ($post) use ($api) {
-            return [
-                'descripcion' => $post->descripcion,
-                'user_name' => $post->user->user_name,
-                'user_id' => $post->user_id,
-                'fecha_publicacion' => $post->fecha_publicacion,
-                'carrera' => $api['carrera'],
-            ];
-        });
+
         return response()->json([
             'status' => true,
-            'data' => $posts,
+            'data' => $data,
         ], 200);
     }
 }
