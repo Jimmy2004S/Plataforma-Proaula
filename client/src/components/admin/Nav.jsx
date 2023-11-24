@@ -25,7 +25,7 @@ const Nav = () => {
           <Link to="/reportes" className="nav__link">
             <GoAlertFill /> Reportes
           </Link>
-          <Link to="/filtrar-proyectos" className="nav__link">
+          <Link to="/buscador" className="nav__link">
             <IoSearchSharp /> Buscar
           </Link>
           <button className="nav__btn-menu">

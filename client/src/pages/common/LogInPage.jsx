@@ -20,7 +20,6 @@ export const LogInPage = () => {
       const response = await login({ email, password });
       if (response.data.token) {
         const userRol = response.data.data.rol_id;
-
         dispatch(
           loginSuccess({
             user: response.data.data,
@@ -85,7 +84,6 @@ export const LogInPage = () => {
     </div>
   );
 };
-
 
 
 

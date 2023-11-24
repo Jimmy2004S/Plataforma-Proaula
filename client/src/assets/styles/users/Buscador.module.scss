@@ -12,8 +12,8 @@
   gap: 0.6rem;
   justify-content: center;
 
-  &__select {
-    padding: 0.5rem;
+  &__input {
+    padding: 0.6rem;
     width: 100%;
     max-width: 330px;
     outline: none;
@@ -27,6 +27,8 @@
     color: #fff;
     border: none;
     padding: 0.5rem;
+    border-radius: 0.3rem;
+    width: 40px;
 
     &:hover {
         background-color: #33992e;
