@@ -113,6 +113,7 @@ class PostController extends Controller
 
     public function misPosts()
     {
+
         $user = Auth::user();
         if (!$user) {
             return response()->json([
@@ -120,14 +121,16 @@ class PostController extends Controller
                 'message' => 'Usuario no logueado'
             ], 401);
         }
-
         try {
-            $posts = DB::select('select * from posts where user_id = ?', [$user->id]);
-            return response()->json([
-                'status' => true,
-                'message' => 'Exitos',
-                'data' => $posts
-            ], 200);
+            $posts = DB::select('select * from posts where user_id = ?', [3]);
+            if (!$posts) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'No tiene posts'
+                ], 404);
+            }
+            
+            return response()->json($posts);
         } catch (Exception $e) {
             return response()->json([
                 'status' => false,
