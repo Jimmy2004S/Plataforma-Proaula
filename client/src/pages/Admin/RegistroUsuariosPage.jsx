@@ -10,7 +10,8 @@ const RegistroUsuariosPage = () => {
 
   //este se muestra cuando esta cargando la respuesta del get
   if (isLoading) return <div>Loading...</div>;
-  //esta si hay un error
+
+  //este si hay un error
   else if (isError) return <div>Error: {error.message}</div>;
 
 

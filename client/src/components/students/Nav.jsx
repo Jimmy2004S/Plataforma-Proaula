@@ -10,7 +10,7 @@ export const Nav = () => {
         <button type="button" className={styles.nav__button}><IoNotifications /></button>
         <Link to="/indexStudents">Inicio</Link>
         <Link to="/buscador">Buscar</Link>
-        <Link>Perfil</Link>
+        <Link to="/perfil">Perfil</Link>
         <button type="button" className={styles.nav__button}><CiMenuKebab/></button>
       </div>
     </nav>

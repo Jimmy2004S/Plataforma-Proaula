@@ -8,9 +8,8 @@ export const ProjectCard = ({project}) => {
   return (
     <div className={styles.card}>
       <img src={ProjectCover} className={styles.card__img} />
-      <p className={styles.card__title}>{project.name}</p>
       <p className={styles.card__description}>
-        {project.description}
+        {project.descripcion}
       </p>
       <LikeButton id={project.id}/>
       <CommentButton/>
@@ -20,8 +19,7 @@ export const ProjectCard = ({project}) => {
 
 ProjectCard.propTypes={
     project: PropTypes.shape({
-        name: PropTypes.string.isRequired, 
-        description: PropTypes.string.isRequired,
         id: PropTypes.number.isRequired,
+        descripcion: PropTypes.string,
     })
 }

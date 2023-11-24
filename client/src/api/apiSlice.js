@@ -3,7 +3,14 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 export const apiSlice = createApi({
     name: "api", 
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://127.0.0.1:8000/api/'
+        baseUrl: 'http://127.0.0.1:8000/api/',
+        prepareHeaders: (headers, {getState})=>{
+            const token = getState().user.token;
+            if(token){
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
     }),
 
     endpoints: (builder) =>({
@@ -39,8 +46,12 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: projectData,
             }),
+            invalidatesTags: ["Projects"]
+        }),
+        getUserProjects: builder.query({
+            query: ()=> "user/misPost",
         }),
     })
 })
 
-export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation, useCreateProjectMutation} = apiSlice
+export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation, useCreateProjectMutation, useGetUserProjectsQuery} = apiSlice

@@ -12,6 +12,8 @@ import { ProjectFormPage } from "./pages/students/ProjectFormPage";
 import { ProjectDetail } from "./pages/common/ProjectDetail";
 import { Nav } from "./components/admin/Nav";
 import { Buscador } from "./pages/common/Buscador";
+import { ProfilePage } from "./pages/students/ProfilePage";
+import { ProfileGroupsPage } from "./pages/students/Profile-GroupsPage";
 
 function App() {
 
@@ -31,6 +33,8 @@ function App() {
           <Route path="/indexStudents" element={<IndexStudentPage />} />
           <Route path="/project-detail" element={<ProjectDetail />} />
           <Route path="/buscador" element={<Buscador />} />
+          <Route path="/perfil" element={<ProfilePage/>}/>
+          <Route path="/perfil-groups" element={<ProfileGroupsPage/>}/>
         </Routes>
       </BrowserRouter>
     </>

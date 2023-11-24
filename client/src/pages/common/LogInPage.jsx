@@ -26,12 +26,12 @@ export const LogInPage = () => {
             token: response.data.token,
           })
         );
-
+        console.log(response)
         if (userRol === 1) {
           navigate('/indexAdmin');
-        } else if (userRol.rol_id === 2) {
+        } else if (userRol === 2) {
           navigate('/indexStudents');
-        } else if (userRol.rol_id === 3) {
+        } else if (userRol === 3) {
           navigate('/indexProfessors');
         }
       } else {
