@@ -1,0 +1,92 @@
+@use '../reset.scss';
+
+.wrapper{
+    display: flex;
+}
+
+.main{
+    padding: 0.8rem;
+    width: 80%;
+    max-width: 750px;
+    margin: 2rem auto;
+
+    &__title{
+        font-size: 1.8rem;
+    }
+}
+
+.card{
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid lightgrey 1px;
+    padding: 0.8rem;
+
+    &__container__left{
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    &__image{
+        width: 100px;
+    }
+
+    &__info{
+        padding-top: 0.8rem;
+        line-height: 1.4;
+    }
+
+    &__text--bold{
+        font-weight: bold;
+    }
+
+    &__text--light{
+        color: #4b4a4a;
+        font-size: 0.9rem;
+    }
+
+    &__container--right{
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+
+        @media (max-width: 740px){
+            align-items: normal;
+            margin-top: 0.6rem;
+        }
+    }
+
+    &__button{
+        border: none;
+        padding: 0.6rem;
+        width: 80px;
+        border-radius: 0.3rem;  
+        font-weight: bold;
+        text-align: center;      
+    }
+
+    &__button--activate{
+        background-color: #00A859;
+        color: #fff;
+
+        &:hover{
+            cursor: pointer;
+            background-color: #02bb65;
+        }
+    }
+
+    &__button--delete{
+        border: solid #CF2E2E 1px;
+        background-color: #fff;
+
+        &:hover{
+            background-color: #CF2E2E;
+            color: #fff;
+        }
+    }
+
+    @media (max-width: 740px){
+        flex-direction: column;
+    }
+}
+

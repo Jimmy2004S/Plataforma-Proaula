@@ -1,0 +1,41 @@
+.card{
+    margin: 0.7rem;
+    padding: 0.7rem;
+    display: flex;
+    gap: 0.7rem;
+    line-height: 1.4;
+    &__icon{
+        width: 40%;
+        max-width: 200px;
+    }
+
+    &__text{
+        font-weight: 600;
+    }
+
+    &__texItalic{
+        font-style: italic;
+        margin-bottom: 0.6rem;
+        color: gray;
+    }
+
+    
+}
+
+.nav{
+    display: flex;
+    gap: 0.8rem;
+    justify-content: flex-end;
+    padding-right: 1.4rem;
+
+    &__link{
+        text-decoration: none;
+        color: #3aaa35;
+        font-weight: 600;
+    }
+}
+
+.wrapper{
+    float: left;
+    padding: 2rem 0.7rem;
+}

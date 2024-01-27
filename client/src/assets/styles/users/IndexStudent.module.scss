@@ -1,0 +1,20 @@
+.section{
+    width: 90%;
+    padding: 1rem;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 1.2rem;
+
+    &__title{
+        grid-area: span 1/span 3;
+
+        @media (max-width: 767px) {
+            grid-area: span 1/span 2;
+        }
+    }
+
+    @media (max-width: 767px) {
+        grid-template-columns: repeat(2, 50%);
+    }
+}

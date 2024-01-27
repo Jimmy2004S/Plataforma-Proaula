@@ -3,6 +3,7 @@ import { useDeleteUserMutation } from "../../api/apiSlice";
 import PropTypes from 'prop-types';
 
 export const RegistroCard = ({ user }) => {
+
   const [deleteUser] = useDeleteUserMutation();
 
   const handleEdit = (id) => {
@@ -10,7 +11,6 @@ export const RegistroCard = ({ user }) => {
   };
 
   const handleDelete = async (id) =>{
-    console.log(id);
     try{
       const result = await deleteUser(id);
       console.log("Usuario eliminado exitosamente: " + result);

@@ -9,8 +9,8 @@ export const Nav = () => {
       <div className={styles.nav__container}>
         <button type="button" className={styles.nav__button}><IoNotifications /></button>
         <Link to="/indexStudents">Inicio</Link>
-        <Link>Buscar</Link>
-        <Link>Perfil</Link>
+        <Link to="/buscador">Buscar</Link>
+        <Link to="/perfil">Perfil</Link>
         <button type="button" className={styles.nav__button}><CiMenuKebab/></button>
       </div>
     </nav>

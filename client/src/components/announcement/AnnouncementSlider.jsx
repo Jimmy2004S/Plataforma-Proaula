@@ -1,7 +1,7 @@
-import {Nav} from '../../components/admin/Nav'
-import styles from "../../assets/styles/users/IndexStudent.module.scss"
-import { AnnouncementCard } from '../../components/announcement/AnnouncementCard';
-export const IndexAdminPage = () => {
+import { AnnouncementCard } from "./AnnouncementCard";
+import styles from "../../assets/styles/announcement/Announcement.module.scss";
+
+export const AnnouncementSlider = () => {
   const announcements = [
     {
       id: 1,
@@ -45,13 +45,12 @@ export const IndexAdminPage = () => {
     },
   ];
   return (
-    <div className='wrapper'>
-      <Nav/>
-      <section className={styles.section}>
-      {announcements.map((announcement) => (
-        <AnnouncementCard key={announcement.id} announcement={announcement} />
-      ))}
-      </section>
-    </div>
+    <section className={styles.section}>
+      <div className={styles.slider}>
+        {announcements.map((announcement) => (
+          <AnnouncementCard key={announcement.id} announcement={announcement} />
+        ))}
+      </div>
+    </section>
   );
 };

@@ -3,13 +3,30 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
 export const apiSlice = createApi({
     name: "api", 
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://5303-181-143-211-148.ngrok-free.app/api/'
+        baseUrl: 'http://127.0.0.1:8000/api/',
+        prepareHeaders: (headers, {getState})=>{
+            const token = getState().user.token;
+            if(token){
+                headers.set('Authorization', `Bearer ${token}`);
+                console.log('Token enviado en la solicitud:', token);
+            }
+            return headers;
+        }
     }),
 
     endpoints: (builder) =>({
         getUser: builder.query({
             query: () => 'user',
             providesTags: ["Users"],
+        }),
+        getProjects: builder.query({
+            query: ()=> 'post'
+        }),
+        filter: builder.query({
+            query: (busqueda)=> `filtrar/${busqueda}`
+        }),
+        getUserProjects: builder.query({
+            query: ()=> "user/misPosts",
         }),
         createUser: builder.mutation({
             query: (newUser) =>({
@@ -21,7 +38,7 @@ export const apiSlice = createApi({
         }),
         deleteUser: builder.mutation({
             query: (id)=>({
-                url: `user/${id}`, 
+                url: `admin/user-registro/${id}`, 
                 method: "DELETE",
             }),
             invalidatesTags: ["Users"]
@@ -39,8 +56,11 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: projectData,
             }),
-        })
+            invalidatesTags: ["Projects"]
+        }),
+        
     })
 })
 
-export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation, useCreateProjectMutation} = apiSlice
+export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation, useCreateProjectMutation, useGetUserProjectsQuery, useGetProjectsQuery} = apiSlice
+export const { useFilter } = apiSlice;

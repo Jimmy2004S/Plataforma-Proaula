@@ -1,0 +1,37 @@
+.wrapper {
+  background: linear-gradient(to right, #021b79, #0575e6);
+  width: 100%;
+  padding: 6rem;
+  margin-bottom: 1rem;
+}
+
+.form {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+
+  &__input {
+    padding: 0.6rem;
+    width: 100%;
+    max-width: 330px;
+    outline: none;
+    border: none;
+    border-radius: 0.2rem;
+    font-size: 1rem;
+  }
+
+  &__button {
+    background-color: #3aaa35;
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    width: 40px;
+
+    &:hover {
+        background-color: #33992e;
+    }
+  }
+}

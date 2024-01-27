@@ -1,42 +1,48 @@
 import "../../assets/styles/login-page.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginSuccess} from "../../features/users/userSlice";
 import { useLoginUserMutation } from "../../api/apiSlice";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
 export const LogInPage = () => {
-  const [userCode, setUserCode] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const [login] = useLoginUserMutation();
 
+  const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log("Enviar")
+    
     try {
-    console.log("Envia")
-      const response = await login({ userCode, password });
-      console.log("Exito", response);
+      const response = await login({ email, password });
       if (response.data.token) {
-    console.log("Enviar")
+        const userRol = response.data.data.rol_id;
         dispatch(
           loginSuccess({
-            user: { type: response.data.userType },
+            user: response.data.data,
             token: response.data.token,
           })
         );
-      console.log("Exito", response);
+        console.log(response)
+        if (userRol === 1) {
+          navigate('/indexAdmin');
+        } else if (userRol === 2) {
+          navigate('/indexStudents');
+        } else if (userRol === 3) {
+          navigate('/indexProfessors');
+        }
       } else {
         console.error("Error al iniciar sesion", response.data.error);
       }
     } catch (error) {
     console.log("Enviar")
-
       console.error("Error: ", error);
     }
   };
-
+  
   return (
     <div className="flex-container">
       <div className="container">
@@ -49,10 +55,10 @@ export const LogInPage = () => {
       </div>
       <form method="post" className="Form" onSubmit={handleLogin}>
         <h3 className="Form__title">Inicia Sesion</h3>
-        <label htmlFor="codigo" className="Form__label">
-          Codigo
+        <label htmlFor="email" className="Form__label">
+          Email
         </label>
-        <input type="text" name="email" id="codigo" className="Form__input" value={userCode} onChange={(e)=>{setUserCode(e.target.value)}}/>
+        <input type="text" name="userCode" id="email" className="Form__input" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
         <label htmlFor="contrasenia" className="Form__label">
           Contraseña
         </label>
@@ -78,7 +84,6 @@ export const LogInPage = () => {
     </div>
   );
 };
-
 
 
 

@@ -43,7 +43,11 @@ class AdminController extends Controller
         try{
             $userToDelete = User::find($user->id);
             $userToDelete->delete();
-            return 'eliminado';
+
+            return response()->json([
+                'status' => false,
+                'message' => 'No se puede'
+            ]);
         }catch(\Exception $e){
             return 'Error';
         }
