@@ -19,6 +19,9 @@ export const apiSlice = createApi({
             query: () => 'user',
             providesTags: ["Users"],
         }),
+        getProjects: builder.query({
+            query: ()=> 'post'
+        }),
         filter: builder.query({
             query: (busqueda)=> `filtrar/${busqueda}`
         }),
@@ -35,7 +38,7 @@ export const apiSlice = createApi({
         }),
         deleteUser: builder.mutation({
             query: (id)=>({
-                url: `user/${id}`, 
+                url: `admin/user-registro/${id}`, 
                 method: "DELETE",
             }),
             invalidatesTags: ["Users"]
@@ -59,5 +62,5 @@ export const apiSlice = createApi({
     })
 })
 
-export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation, useCreateProjectMutation, useGetUserProjectsQuery} = apiSlice
+export const {useGetUserQuery, useCreateUserMutation, useDeleteUserMutation, useLoginUserMutation, useCreateProjectMutation, useGetUserProjectsQuery, useGetProjectsQuery} = apiSlice
 export const { useFilter } = apiSlice;

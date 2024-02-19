@@ -2,16 +2,16 @@ import styles from "../../assets/styles/users/Nav.module.scss";
 import { useState } from "react";
 import { useCreateProjectMutation } from "../../api/apiSlice";
 export const ProjectForm = () => {
-  const [projectDescription, setProjectDescription] = useState("");
+  const [descripcion, setDescripcion] = useState("");
 
   const [createProject] = useCreateProjectMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await createProject(projectDescription);
+      const response = await createProject({descripcion});
       console.log("exito", response);
-      setProjectDescription("");
+      setDescripcion("");
     } catch (error) {
       console.error(error);
     }
@@ -30,14 +30,15 @@ export const ProjectForm = () => {
           className={styles.form__input}
         />
         <textarea
-          name="descripcion"
+          name="descripciones"
+          id="descripcion"
           cols="30"
           rows="10"
           placeholder="Descripcion"
-          value={projectDescription}
+          value={descripcion}
           className={styles.form__textarea}
           onChange={(e) => {
-            setProjectDescription(e.target.value);
+            setDescripcion(e.target.value);
           }}
         ></textarea>
         <input type="submit" value="Publicar" className={styles.form__button} />

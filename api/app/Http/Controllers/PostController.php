@@ -103,7 +103,6 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-
         $post->delete();
         return response()->json([
             'status' => true,
@@ -121,12 +120,8 @@ class PostController extends Controller
             ], 401);
         }
         try {
-            $posts = DB::select('select * from posts where user_id = ?', [3]);
-            return response()->json([
-                'status' => true,
-                'message' => 'Exitos',
-                'data' => $posts
-            ], 200);
+            $posts = DB::select('select * from posts where user_id = ?', [$user->id]);
+            return response()->json($posts);
         } catch (Exception $e) {
             return response()->json([
                 'status' => false,

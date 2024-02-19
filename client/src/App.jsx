@@ -10,10 +10,10 @@ import { IndexProfessorPage } from "./pages/professors/IndexProfessorPage";
 import { RegistroUsuariosPage } from "./pages/Admin/RegistroUsuariosPage";
 import { ProjectFormPage } from "./pages/students/ProjectFormPage";
 import { ProjectDetail } from "./pages/common/ProjectDetail";
-import { Nav } from "./components/admin/Nav";
 import { Buscador } from "./pages/common/Buscador";
 import { ProfilePage } from "./pages/students/ProfilePage";
 import { ProfileGroupsPage } from "./pages/students/Profile-GroupsPage";
+import { ReportesPage } from "./pages/Admin/ReportesPage";
 
 function App() {
 
@@ -28,7 +28,7 @@ function App() {
           <Route path="/indexStudents" element={<IndexStudentPage />} />
           <Route path="/indexAdmin" element={<IndexAdminPage />} />
           <Route path="/users-list" element={<RegistroUsuariosPage />} />
-          <Route path="/reportes" element={<Reportes />} />
+          <Route path="/reportes" element={<ReportesPage />} />
           <Route path="/project-form" element={<ProjectFormPage />} />
           <Route path="/indexStudents" element={<IndexStudentPage />} />
           <Route path="/project-detail" element={<ProjectDetail />} />
@@ -41,13 +41,5 @@ function App() {
   );
 }
 
-const Reportes = () => {
-  return (
-    <div className="wrapper">
-      <Nav />
-      <div>Reportes</div>
-    </div>
-  );
-};
 
 export default App;

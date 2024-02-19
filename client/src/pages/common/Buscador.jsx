@@ -11,9 +11,9 @@ import { ProjectCard } from "../../components/project/ProjectCard";
 
 export const Buscador = () => {
   const rol = useSelector((state) => state.user.user.rol_id);
-  const [busqueda, setbusqueda] = useState("");
-  const { data, isLoading, isError, error, refetch } = useFilter(busqueda);
-  console.log(data)
+  // const [busqueda, setbusqueda] = useState("");
+  // const { data, isLoading, isError, error, refetch } = useFilter(busqueda);
+  // console.log(data)
   return (
     <div>
       {rol === 1 && <Return />}
@@ -35,10 +35,7 @@ export const Buscador = () => {
           </button>
         </form>
       </div>
-      {isLoading && <h3>Cargando</h3>}
-      {isError && <h3>{error.message}</h3>}
-      {data && <ProjectCard projects={data} />}
-    
+      <ProjectList/>
       <Footer />
     </div>
   );
