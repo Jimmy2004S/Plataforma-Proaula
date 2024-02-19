@@ -5,7 +5,6 @@ import { ProfileNav } from "../../components/students/ProfileNav";
 import { useSelector } from "react-redux";
 import { useGetUserProjectsQuery } from "../../api/apiSlice";
 import { ProjectCard } from "../../components/project/ProjectCard";
-import { Link } from "react-router-dom";
 
 export const ProfilePage = () => {
   const rol = useSelector((state)=> state.user.user.rol_id);
